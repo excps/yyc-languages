@@ -6,6 +6,7 @@ import { AboutPage } from "./pages/AboutPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { TermsOfServicePage } from "./pages/TermsOfServicePage";
 import { FAQPage } from "./pages/FAQPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<TermsOfServicePage />} />
           <Route path="/faq" element={<FAQPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </div>

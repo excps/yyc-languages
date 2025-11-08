@@ -2,7 +2,7 @@
 # Controls npm and Docker build operations
 
 # Variables
-REGISTRY := 192.168.1.10:5001
+REGISTRY := localhost:5001
 IMAGE_BASE_NAME := yyc-languages
 CONTAINER_NAME := yyc-languages
 PORT := 8080
