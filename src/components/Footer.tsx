@@ -4,12 +4,12 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-white text-lg mb-4">German Tutoring Pro</h3>
+            <h3 className="text-white text-lg mb-4">YYC-Languages</h3>
             <p className="text-sm">
               Expert German language instruction tailored to your goals. Learn from native speakers and achieve fluency faster.
             </p>
           </div>
-          <div>
+          {/* <div>
             <h4 className="text-white mb-4">Courses</h4>
             <ul className="space-y-2 text-sm">
               <li><a href="#" className="hover:text-white transition-colors">Beginner (A1-A2)</a></li>
@@ -37,10 +37,10 @@ export function Footer() {
               <li><a href="#" className="hover:text-white transition-colors">Cookie Policy</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Refund Policy</a></li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <div className="pt-8 border-t border-gray-800 text-sm text-center">
-          <p>&copy; {new Date().getFullYear()} German Tutoring Pro. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} YYC-Languages. All rights reserved.</p>
         </div>
       </div>
     </footer>

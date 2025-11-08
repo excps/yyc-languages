@@ -65,7 +65,7 @@ ${formData.message || 'Not provided'}
             Ready to Start Learning?
           </h2>
           <p className="text-xl text-gray-600">
-            Schedule your free trial lesson today and take the first step toward German fluency.
+            Schedule your free Meet and Greet appointment today and take the first step toward German fluency.
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12">
@@ -83,7 +83,7 @@ ${formData.message || 'Not provided'}
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="John Doe"
+                    placeholder="Your Name"
                   />
                 </div>
                 <div>
@@ -97,7 +97,7 @@ ${formData.message || 'Not provided'}
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="john@example.com"
+                    placeholder="email@example.com"
                   />
                 </div>
                 <div>
@@ -110,7 +110,7 @@ ${formData.message || 'Not provided'}
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+49 123 456 7890"
+                    placeholder="+1 ... "
                   />
                 </div>
                 <div>

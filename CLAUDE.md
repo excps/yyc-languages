@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a React-based single-page language tutoring website built with Vite, TypeScript, and Tailwind CSS v4. The project was originally designed in Figma (https://www.figma.com/design/Adjh5pixgTtGXSTysaaHuw/Language-Tutoring-Website) and converted to a functional web application.
+This is a React-based single-page language tutoring website built with Vite, TypeScript, and Tailwind CSS v4.
 
 The site features a complete landing page for a German language tutoring service with sections for hero, features, courses, testimonials, pricing, contact, and footer.
 
@@ -67,7 +67,7 @@ src/
 │   ├── Contact.tsx           # Contact form
 │   ├── Footer.tsx            # Footer with links
 │   ├── ui/                   # Radix UI components (button, card, input, etc.)
-│   └── figma/                # Figma-specific components (ImageWithFallback)
+│   └── figma/                # ImageWithFallback
 └── styles/
     └── globals.css            # Tailwind v4 config & custom CSS variables
 ```
@@ -128,7 +128,7 @@ When adding new sections or features:
 
 ### Image Handling
 
-Use `ImageWithFallback` component from `src/components/figma/` for external images. This provides fallback handling for broken image URLs (common with Unsplash placeholders from Figma designs).
+Use `ImageWithFallback` component from `src/components/figma/` for external images.
 
 ## Important Notes
 

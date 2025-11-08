@@ -19,7 +19,7 @@ export function Navigation() {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
               <span className="text-white">DE</span>
             </div>
-            <span className="text-xl text-gray-900">German Tutoring Pro</span>
+            <span className="text-xl text-gray-900">YYC-Languages</span>
           </div>
           
           {/* Desktop Navigation */}

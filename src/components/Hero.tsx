@@ -49,9 +49,9 @@ export function Hero() {
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1589395937658-0557e7d89fad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnZXJtYW4lMjBsYW5ndWFnZSUyMGxlYXJuaW5nfGVufDF8fHx8MTc2MjU5NTcyNnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="German language learning"
-                className="w-full h-[500px] object-cover"
+                src="/images/yycl-logo.jpeg"
+                alt="YYC Languages Logo"
+                className="w-full h-[500px] object-contain bg-white"
               />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl">
