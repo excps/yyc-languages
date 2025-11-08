@@ -75,7 +75,6 @@ clean:
 docker-build:
 	@echo "Building Docker image..."
 	@echo "  Branch: $(GIT_BRANCH)"
-	@echo "  Commit: $(GIT_COMMIT)"
 	@echo "  Images: $(IMAGE_NAME) and $(IMAGE_LATEST)"
 	docker build -t $(IMAGE_NAME) -t $(IMAGE_LATEST) .
 
@@ -124,7 +123,7 @@ compose-logs:
 	docker-compose logs -f $(COMPOSE_SERVICE)
 
 # Full Deployment Workflow
-deploy: build docker-build
+deploy: build docker-build docker-push
 	@echo "Deployment complete!"
 	@echo "Run 'make docker-run' to start the container"
 	@echo "Or 'make compose-up' to use docker-compose"
