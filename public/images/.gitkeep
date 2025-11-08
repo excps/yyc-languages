@@ -1,0 +1,4 @@
+# This file ensures the images directory is tracked by git even when empty
+# Place your local images here and reference them in your components as:
+# - /images/your-image.jpg (in src code)
+# - They will be available at ./images/your-image.jpg in the build
