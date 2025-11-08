@@ -31,20 +31,6 @@ export function Hero() {
                 Explore Courses
               </Button>
             </div>
-            <div className="flex gap-8 pt-4">
-              <div>
-                <div className="text-3xl text-blue-600">500+</div>
-                <div className="text-gray-600">Students Taught</div>
-              </div>
-              <div>
-                <div className="text-3xl text-blue-600">4.9★</div>
-                <div className="text-gray-600">Average Rating</div>
-              </div>
-              <div>
-                <div className="text-3xl text-blue-600">10+</div>
-                <div className="text-gray-600">Years Experience</div>
-              </div>
-            </div>
           </div>
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
@@ -54,7 +40,8 @@ export function Hero() {
                 className="w-full h-[500px] object-contain bg-white"
               />
             </div>
-            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl">
+            <div  className="hidden">
+              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                   <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,6 +52,7 @@ export function Hero() {
                   <div className="text-sm text-gray-500">Success Rate</div>
                   <div className="text-xl text-gray-900">98%</div>
                 </div>
+              </div>
               </div>
             </div>
           </div>

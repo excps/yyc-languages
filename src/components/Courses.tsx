@@ -43,7 +43,7 @@ const courses = [
       "Idiomatic expressions",
       "Professional and academic fluency",
       "Literature and media analysis",
-      "Exam preparation (TestDaF, Goethe, Telc)",
+      "Exam preparation (Goethe, Telc)",
       "Cultural immersion"
     ],
     color: "bg-amber-50 border-amber-200",

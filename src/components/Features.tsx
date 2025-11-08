@@ -19,7 +19,7 @@ const features = [
   {
     icon: Award,
     title: "Exam Preparation",
-    description: "Specialized training for TestDaF, Goethe-Zertifikat, Telc."
+    description: "Specialized training for Goethe-Zertifikat, Telc."
   },
   {
     icon: Globe,

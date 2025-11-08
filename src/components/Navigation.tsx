@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const location = useLocation();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -10,38 +14,76 @@ export function Navigation() {
     setIsMenuOpen(false);
   };
 
+  const handleHomeClick = (e: React.MouseEvent) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <nav className="sticky top-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
+    <nav className="sticky top-0 bg-background shadow-sm z-50 border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-xl text-gray-900 hover:text-gray-700 transition-colors"
+            <Link
+              to="/"
+              onClick={handleHomeClick}
+              className="text-xl text-foreground hover:text-muted-foreground transition-colors"
             >
               YYC-Languages
-            </button>
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <button
-              onClick={() => scrollToSection('courses')}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
+            <Link
+              to="/about"
+              className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Courses
-            </button>
+              About Us
+            </Link>
+            {location.pathname === '/' ? (
+              <>
+                <button
+                  onClick={() => scrollToSection('courses')}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Courses
+                </button>
+                <button
+                  onClick={() => scrollToSection('contact')}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Contact
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/#courses"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Courses
+                </Link>
+                <Link
+                  to="/#contact"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Contact
+                </Link>
+              </>
+            )}
             <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="hidden text-gray-600 hover:text-gray-900 transition-colors"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+              aria-label="Toggle theme"
             >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Contact
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
             </button>
           </div>
 
@@ -57,26 +99,59 @@ export function Navigation() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-4">
-            <button 
-              onClick={() => scrollToSection('courses')} 
-              className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded"
+            <Link
+              to="/about"
+              onClick={() => setIsMenuOpen(false)}
+              className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
             >
-              Courses
-            </button>
+              About Us
+            </Link>
+            {location.pathname === '/' ? (
+              <>
+                <button
+                  onClick={() => scrollToSection('courses')}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Courses
+                </button>
+                <button
+                  onClick={() => scrollToSection('contact')}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Contact
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/#courses"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Courses
+                </Link>
+                <Link
+                  to="/#contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Contact
+                </Link>
+              </>
+            )}
             <button
               onClick={() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTheme(theme === 'dark' ? 'light' : 'dark');
                 setIsMenuOpen(false);
               }}
-              className="hidden w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded"
+              className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded flex items-center gap-2"
             >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded"
-            >
-              Contact
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
             </button>
           </div>
         )}
