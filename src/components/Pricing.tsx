@@ -16,7 +16,9 @@ const plans = [
       "No commitment required"
     ],
     cta: "Book Your Meet & Greet",
-    popular: false
+    popular: false,
+    color: "bg-gray-100 border-gray-300",
+    titleColor: "text-gray-700"
   },
   {
     name: "Standard",
@@ -32,13 +34,15 @@ const plans = [
       "Progress tracking quarterly"
     ],
     cta: "Get Started",
-    popular: true
+    popular: false,
+    color: "bg-red-50 border-red-200",
+    titleColor: "text-red-600"
   },
   {
-    name: "Package",
+    name: "10 Lesson OFFER",
     price: "$540",
     period: "10 lessons",
-    description: "Best value for committed learners",
+    description: "Best value for committed learners, with flexible schedule",
     features: [
       "10x 60-minute lessons",
       "Save $60 ($54/lesson)",
@@ -48,7 +52,9 @@ const plans = [
       "Valid for 6 months"
     ],
     cta: "Buy Package",
-    popular: false
+    popular: false,
+    color: "bg-amber-50 border-amber-200",
+    titleColor: "text-amber-600"
   }
 ];
 
@@ -66,12 +72,12 @@ export function Pricing() {
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
-            <Card 
-              key={index} 
-              className={`p-8 relative ${
-                plan.popular 
-                  ? 'border-2 border-blue-500 shadow-xl scale-105' 
-                  : 'border border-gray-200'
+            <Card
+              key={index}
+              className={`p-8 relative flex flex-col h-full ${plan.color} border-2 ${
+                plan.popular
+                  ? 'shadow-xl scale-105'
+                  : ''
               }`}
             >
               {plan.popular && (
@@ -81,26 +87,28 @@ export function Pricing() {
                   </span>
                 </div>
               )}
-              <div className="text-center mb-6">
-                <h3 className="text-2xl text-gray-900 mb-2">{plan.name}</h3>
-                <div className="mb-2">
-                  <span className="text-4xl text-gray-900">{plan.price}</span>
-                  <span className="text-gray-600 ml-2">{plan.period}</span>
+              <div className="flex-grow">
+                <div className="text-center mb-6">
+                  <h3 className={`text-2xl font-bold ${plan.titleColor} mb-2`}>{plan.name}</h3>
+                  <div className="mb-2">
+                    <span className="text-2xl text-gray-900">{plan.price}</span>
+                    <span className="text-gray-600 ml-2">{plan.period}</span>
+                  </div>
+                  <p className="text-gray-600">{plan.description}</p>
                 </div>
-                <p className="text-gray-600">{plan.description}</p>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button 
+              <Button
                 className={`w-full ${
-                  plan.popular 
-                    ? 'bg-blue-600 hover:bg-blue-700' 
+                  plan.popular
+                    ? 'bg-blue-600 hover:bg-blue-700'
                     : 'bg-gray-900 hover:bg-gray-800'
                 }`}
                 onClick={() => {

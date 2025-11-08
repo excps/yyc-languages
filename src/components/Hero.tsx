@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./general/ImageWithFallback";
 
 export function Hero() {
   const scrollToContact = () => {
@@ -23,7 +23,7 @@ export function Hero() {
                 className="bg-blue-600 hover:bg-blue-700"
                 onClick={scrollToContact}
               >
-                Start Your Free Trial
+                Arrange a Meet and Greet Appointment
               </Button>
               <Button size="lg" variant="outline" onClick={() => {
                 document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' });

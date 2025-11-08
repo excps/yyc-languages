@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
 
 export function Navigation() {
@@ -16,38 +15,34 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-              <span className="text-white">DE</span>
-            </div>
-            <span className="text-xl text-gray-900">YYC-Languages</span>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="text-xl text-gray-900 hover:text-gray-700 transition-colors"
+            >
+              YYC-Languages
+            </button>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <button 
-              onClick={() => scrollToSection('courses')} 
+            <button
+              onClick={() => scrollToSection('courses')}
               className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               Courses
             </button>
-            <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-              className="text-gray-600 hover:text-gray-900 transition-colors"
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="hidden text-gray-600 hover:text-gray-900 transition-colors"
             >
               About
             </button>
-            <button 
-              onClick={() => scrollToSection('contact')} 
+            <button
+              onClick={() => scrollToSection('contact')}
               className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               Contact
             </button>
-            <Button 
-              className="bg-blue-600 hover:bg-blue-700"
-              onClick={() => scrollToSection('contact')}
-            >
-              Free Trial
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -68,29 +63,21 @@ export function Navigation() {
             >
               Courses
             </button>
-            <button 
+            <button
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 setIsMenuOpen(false);
-              }} 
-              className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded"
+              }}
+              className="hidden w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded"
             >
               About
             </button>
-            <button 
-              onClick={() => scrollToSection('contact')} 
+            <button
+              onClick={() => scrollToSection('contact')}
               className="block w-full text-left px-4 py-2 text-gray-600 hover:bg-gray-50 rounded"
             >
               Contact
             </button>
-            <div className="px-4">
-              <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700"
-                onClick={() => scrollToSection('contact')}
-              >
-                Free Trial
-              </Button>
-            </div>
           </div>
         )}
       </div>

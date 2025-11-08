@@ -15,7 +15,8 @@ const courses = [
       "Cultural introduction",
       "Travel and living in Germany"
     ],
-    color: "bg-green-50 border-green-200"
+    color: "bg-gray-100 border-gray-300",
+    titleColor: "text-gray-700"
   },
   {
     level: "Intermediate",
@@ -29,8 +30,9 @@ const courses = [
       "Writing skills development",
        "Basic Business German"
     ],
-    color: "bg-blue-50 border-blue-200",
-    popular: true
+    color: "bg-red-50 border-red-200",
+    titleColor: "text-red-600",
+    // popular: true
   },
   {
     level: "Advanced",
@@ -44,7 +46,8 @@ const courses = [
       "Exam preparation (TestDaF, Goethe, Telc)",
       "Cultural immersion"
     ],
-    color: "bg-purple-50 border-purple-200"
+    color: "bg-amber-50 border-amber-200",
+    titleColor: "text-amber-600"
   }
 ];
 
@@ -58,28 +61,37 @@ export function Courses() {
           </h2>
           <p className="text-xl text-gray-600">
             Tailored German lessons for beginners, intermediate learners, and advanced speakers. We have the right course for you!
-            
+
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {courses.map((course, index) => (
-            <Card key={index} className={`p-4 ${course.color} border-2 relative overflow-hidden`}>
-              <div className="mb-3">
-                <h3 className="text-xl text-gray-900 mb-0.5 leading-tight">{course.level}</h3>
-                <p className="text-sm text-gray-600 leading-tight">{course.subtitle}</p>
+            <Card key={index} className={`p-8 ${course.color} border-2 relative overflow-hidden flex flex-col h-full`}>
+              <div className="flex-grow">
+                <div className="mb-6">
+                  <h3 className={`text-2xl font-bold ${course.titleColor} mb-2`}>{course.level}</h3>
+                  <p className="text-gray-600">{course.subtitle}</p>
+                </div>
+                <p className="text-gray-600 mb-8">{course.description}</p>
+                <ul className="space-y-3 mb-8">
+                  {course.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <p className="text-sm text-gray-700 mb-3 leading-tight">{course.description}</p>
-              <ul className="space-y-1.5 mb-4">
-                {course.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-1.5">
-                    <Check className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-gray-700 leading-tight">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              }}>
+              <Button
+                className={`w-full ${
+                  course.popular
+                    ? 'bg-blue-600 hover:bg-blue-700'
+                    : 'bg-gray-900 hover:bg-gray-800'
+                }`}
+                onClick={() => {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Get Started
               </Button>
             </Card>
