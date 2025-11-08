@@ -11,6 +11,7 @@ export function Footer() {
               Expert German language instruction tailored to your goals. Learn from native speakers and achieve fluency faster.
             </p>
           </div>
+          <div></div>
           <div>
             <h4 className="text-white mb-4">Resources</h4>
             <ul className="space-y-2 text-sm">

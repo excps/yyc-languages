@@ -18,8 +18,8 @@ export function Hero() {
               Personalized one-on-one lessons tailored to your goals. Whether you're preparing for exams, advancing your career, or exploring German culture, we're here to help you succeed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="bg-blue-600 hover:bg-blue-700"
                 onClick={scrollToContact}
               >
