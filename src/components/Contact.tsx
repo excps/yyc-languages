@@ -19,28 +19,28 @@ export function Contact() {
     e.preventDefault();
 
     // Build nicely formatted plain text email body
-    const subject = encodeURIComponent('🇩🇪 German Tutoring - Free Trial Lesson Request');
+    const subject = encodeURIComponent('German Tutoring - Appointment Request');
     const body = encodeURIComponent(
-`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`
   NEW STUDENT INQUIRY
   Free Meet And Greet Request
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 STUDENT INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Name:           ${formData.name}
 Email:          ${formData.email}
 Phone:          ${formData.phone || 'Not provided'}
 German Level:   ${formData.level}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 LEARNING GOALS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 ${formData.message || 'Not provided'}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+`
     );
 
     // Open user's default email client with pre-filled information
