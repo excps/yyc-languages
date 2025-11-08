@@ -165,3 +165,6 @@ test:
 lint:
 	@echo "Running linting..."
 	npm run lint 2>/dev/null || echo "No lint script configured"
+
+sync:
+    rsync -avu --exclude node_modules ./ andi@192.168.1.10:/home/andi/docker/yyc-languages/

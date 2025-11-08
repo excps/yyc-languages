@@ -8,20 +8,20 @@ import { ImageWithFallback } from "./general/ImageWithFallback";
 
 export function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    level: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    level: "",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Build nicely formatted plain text email body
-    const subject = encodeURIComponent('German Tutoring - Appointment Request');
+    const subject = encodeURIComponent("German Tutoring - Appointment Request");
     const body = encodeURIComponent(
-`
+      `
   NEW STUDENT INQUIRY
   Free Meet And Greet Request
 
@@ -31,29 +31,33 @@ STUDENT INFORMATION
 
 Name:           ${formData.name}
 Email:          ${formData.email}
-Phone:          ${formData.phone || 'Not provided'}
+Phone:          ${formData.phone || "Not provided"}
 German Level:   ${formData.level}
 
 
 LEARNING GOALS
 
 
-${formData.message || 'Not provided'}
+${formData.message || "Not provided"}
 
-`
+`,
     );
 
     // Open user's default email client with pre-filled information
     window.location.href = `mailto:info@yyclanguages.ca?subject=${subject}&body=${body}`;
 
     // Clear the form
-    setFormData({ name: '', email: '', phone: '', level: '', message: '' });
+    setFormData({ name: "", email: "", phone: "", level: "", message: "" });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -65,7 +69,8 @@ ${formData.message || 'Not provided'}
             Ready to Start Learning?
           </h2>
           <p className="text-xl text-gray-600">
-            Schedule your free Meet and Greet appointment today and take the first step toward German fluency.
+            Schedule your free Meet and Greet appointment today and take the
+            first step toward German fluency.
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12">
@@ -126,10 +131,14 @@ ${formData.message || 'Not provided'}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">Select your level</option>
-                    <option value="complete-beginner">Complete Beginner (A1)</option>
+                    <option value="complete-beginner">
+                      Complete Beginner (A1)
+                    </option>
                     <option value="elementary">Elementary (A2)</option>
                     <option value="intermediate">Intermediate (B1)</option>
-                    <option value="upper-intermediate">Upper Intermediate (B2)</option>
+                    <option value="upper-intermediate">
+                      Upper Intermediate (B2)
+                    </option>
                     <option value="advanced">Advanced (C1)</option>
                     <option value="proficient">Proficient (C2)</option>
                   </select>
@@ -147,7 +156,10 @@ ${formData.message || 'Not provided'}
                     placeholder="I want to learn German because..."
                   />
                 </div>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                >
                   Schedule Your Free Meet And Greet
                 </Button>
               </form>
@@ -169,10 +181,12 @@ ${formData.message || 'Not provided'}
                 <div>
                   <h3 className="text-lg text-gray-900 mb-1">Email Us</h3>
                   <p className="text-gray-600">info@yyclanguages.ca</p>
-                  <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    We'll respond within 24 hours
+                  </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
+              {/*<div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Phone className="w-6 h-6 text-blue-600" />
                 </div>
@@ -190,7 +204,7 @@ ${formData.message || 'Not provided'}
                   <h3 className="text-lg text-gray-900 mb-1">Visit Us</h3>
                   <p className="text-gray-600">Millrise SW, Calgary</p>
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>
