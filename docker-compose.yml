@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: yyc-languages
+    container_name: yyc-lang
     ports:
       - "8080:80"
     restart: unless-stopped
@@ -15,14 +15,14 @@ services:
       - API_URL=/api
       - CONTACT_EMAIL=info@yyclanguages.ca
     # Resource limits for production
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-          cpus: '0.5'
-        reservations:
-          memory: 128M
-          cpus: '0.25'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 256M
+    #       cpus: '0.5'
+    #     reservations:
+    #       memory: 128M
+    #       cpus: '0.25'
     # Health check with curl (more reliable than wget)
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
@@ -30,3 +30,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+      
+networks:
+  web-network:
+    external: true 

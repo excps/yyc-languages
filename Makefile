@@ -2,7 +2,7 @@
 # Controls npm and Docker build operations
 
 # Variables
-REGISTRY := https://docker0.local:5001
+REGISTRY := 192.168.1.10:5001
 IMAGE_BASE_NAME := yyc-languages
 CONTAINER_NAME := yyc-languages
 PORT := 8080
@@ -13,17 +13,11 @@ GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unkno
 GIT_COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 
 # Image tagging
-ifeq ($(GIT_BRANCH),main)
-IMAGE_TAG := latest
-else ifeq ($(GIT_BRANCH),master)
-IMAGE_TAG := latest
-else
 IMAGE_TAG := $(GIT_BRANCH)
-endif
 
-# Full image name
+# Full image names
 IMAGE_NAME := $(IMAGE_BASE_NAME):$(IMAGE_TAG)
-IMAGE_NAME_COMMIT := $(IMAGE_BASE_NAME):$(GIT_COMMIT)
+IMAGE_LATEST := $(IMAGE_BASE_NAME):latest
 
 .PHONY: help install dev build clean docker-build docker-run docker-stop docker-logs docker-clean docker-push
 
@@ -34,7 +28,7 @@ help:
 	@echo "Current Git Context:"
 	@echo "  Branch: $(GIT_BRANCH)"
 	@echo "  Commit: $(GIT_COMMIT)"
-	@echo "  Image: $(IMAGE_NAME)"
+	@echo "  Images: $(IMAGE_NAME) and $(IMAGE_LATEST)"
 	@echo ""
 	@echo "Development:"
 	@echo "  install     - Install npm dependencies"
@@ -43,14 +37,12 @@ help:
 	@echo "  clean       - Clean build artifacts"
 	@echo ""
 	@echo "Docker:"
-	@echo "  docker-build     - Build Docker image (tagged with branch)"
-	@echo "  docker-build-tag - Build with custom tag (TAG=your-tag)"
+	@echo "  docker-build     - Build Docker image (latest and branch tags)"
 	@echo "  docker-run       - Run Docker container"
 	@echo "  docker-stop      - Stop Docker container"
 	@echo "  docker-logs      - Show Docker container logs"
 	@echo "  docker-clean     - Remove Docker image and container"
-	@echo "  docker-push      - Push branch-based tag to registry"
-	@echo "  docker-push-tag  - Push custom tag to registry (TAG=your-tag)"
+	@echo "  docker-push      - Push latest and branch tags to registry"
 	@echo "  images           - Show all available images"
 	@echo ""
 	@echo "Compose:"
@@ -84,8 +76,8 @@ docker-build:
 	@echo "Building Docker image..."
 	@echo "  Branch: $(GIT_BRANCH)"
 	@echo "  Commit: $(GIT_COMMIT)"
-	@echo "  Image: $(IMAGE_NAME)"
-	docker build -t $(IMAGE_NAME) .
+	@echo "  Images: $(IMAGE_NAME) and $(IMAGE_LATEST)"
+	docker build -t $(IMAGE_NAME) -t $(IMAGE_LATEST) .
 
 docker-run:
 	@echo "Running Docker container $(CONTAINER_NAME) on port $(PORT)..."
@@ -104,35 +96,19 @@ docker-clean:
 	-docker stop $(CONTAINER_NAME) 2>/dev/null
 	-docker rm $(CONTAINER_NAME) 2>/dev/null
 	-docker rmi $(IMAGE_NAME) 2>/dev/null
+	-docker rmi $(IMAGE_LATEST) 2>/dev/null
 
-docker-build-tag:
-	@echo "Building Docker image with custom tag..."
-	@echo "Usage: make docker-build-tag TAG=your-tag"
-	@if [ -z "$(TAG)" ]; then \
-		echo "Error: TAG variable not set. Usage: make docker-build-tag TAG=your-tag"; \
-		exit 1; \
-	fi
-	docker build -t $(IMAGE_BASE_NAME):$(TAG) .
-
-docker-push-tag:
-	@echo "Pushing Docker image with custom tag..."
-	@echo "Usage: make docker-push-tag TAG=your-tag"
-	@if [ -z "$(TAG)" ]; then \
-		echo "Error: TAG variable not set. Usage: make docker-push-tag TAG=your-tag"; \
-		exit 1; \
-	fi
-	@echo "  Registry: $(REGISTRY)"
-	@echo "  Custom tag: $(IMAGE_BASE_NAME):$(TAG)"
-	docker tag $(IMAGE_BASE_NAME):$(TAG) $(REGISTRY)/$(IMAGE_BASE_NAME):$(TAG)
-	docker push $(REGISTRY)/$(IMAGE_BASE_NAME):$(TAG)
 
 docker-push:
-	@echo "Pushing Docker image to registry..."
+	@echo "Pushing Docker images to registry..."
 	@echo "  Registry: $(REGISTRY)"
-	@echo "  Image: $(IMAGE_NAME)"
-	# Tag and push branch-based image
+	@echo "  Images: $(IMAGE_NAME) and $(IMAGE_LATEST)"
+	# Tag and push branch image
 	docker tag $(IMAGE_NAME) $(REGISTRY)/$(IMAGE_NAME)
 	docker push $(REGISTRY)/$(IMAGE_NAME)
+	# Tag and push latest image
+	docker tag $(IMAGE_LATEST) $(REGISTRY)/$(IMAGE_LATEST)
+	docker push $(REGISTRY)/$(IMAGE_LATEST)
 
 # Docker Compose Commands
 compose-up:
