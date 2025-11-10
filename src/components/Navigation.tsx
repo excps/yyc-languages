@@ -43,6 +43,12 @@ export function Navigation() {
             >
               About Us
             </Link>
+            <Link
+              to="/meet-andrea"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Meet Andrea
+            </Link>
             {location.pathname === '/' ? (
               <>
                 <button
@@ -105,6 +111,13 @@ export function Navigation() {
               className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
             >
               About Us
+            </Link>
+            <Link
+              to="/meet-andrea"
+              onClick={() => setIsMenuOpen(false)}
+              className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+            >
+              Meet Andrea
             </Link>
             {location.pathname === '/' ? (
               <>

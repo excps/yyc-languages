@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { Heart, Target, BookOpen, Users } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Heart, Target, BookOpen, Users, ArrowRight } from "lucide-react";
 
 export function AboutPage() {
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (
@@ -11,9 +12,7 @@ export function AboutPage() {
       <div className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-5xl text-gray-900 mb-4">
-              About YYC-Languages
-            </h1>
+            <h1 className="text-5xl text-gray-900 mb-4">About YYC-Languages</h1>
             <p className="text-xl text-gray-600">
               Your trusted partner in German language learning, based in Calgary
             </p>
@@ -23,27 +22,38 @@ export function AboutPage() {
             <div className="space-y-6">
               <h2 className="text-3xl text-gray-900 mb-4">Our Story</h2>
               <p className="text-lg text-gray-600">
-                YYC-Languages was founded with a simple mission: to make high-quality German language education accessible to everyone in Calgary and beyond. With over a decade of teaching experience, we've helped hundreds of students achieve their language learning goals.
+                At YYC-Languages, we believe learning German should be both
+                inspiring and rewarding. Based in Calgary, we offer personalized
+                lessons for learners of all levels—from those just starting out
+                to those refining advanced skills.
               </p>
               <p className="text-lg text-gray-600">
-                Whether you're learning German for career advancement, academic requirements, travel, or personal enrichment, we provide a supportive and engaging environment where you can thrive.
-              </p>
-              <p className="text-lg text-gray-600">
-                Our approach combines traditional teaching methods with modern technology, ensuring that every lesson is both effective and enjoyable. We believe that language learning should be a journey of discovery, not just memorization.
+                Our teaching style combines trusted language-learning techniques
+                with modern tools and interactive activities, making each
+                session engaging and effective. Whether you’re learning German
+                for work, study, travel, or simply for the joy of it, we’re here
+                to guide you every step of the way.
               </p>
             </div>
 
             <div className="space-y-6">
-              <h2 className="text-3xl text-gray-900 mb-4">Meet Andrea</h2>
-              <p className="text-lg text-gray-600">
-                Andrea is a native German speaker with over 10 years of professional teaching experience. Having lived in both Germany and Canada, she brings a unique perspective that bridges cultural differences and makes learning more relevant.
-              </p>
-              <p className="text-lg text-gray-600">
-                With certifications in language instruction and exam preparation, Andrea specializes in helping students prepare for Goethe-Zertifikat, and Telc exams. Her personalized approach ensures that each student receives instruction tailored to their learning style and goals.
-              </p>
-              <p className="text-lg text-gray-600">
-                Andrea's passion for teaching and deep understanding of German culture make every lesson engaging and insightful. Her students consistently achieve their language goals and develop a lasting appreciation for the German language.
-              </p>
+              <h2 className="text-3xl text-gray-900 mb-4">Your Instructor</h2>
+              <div className="bg-white rounded-xl shadow-lg p-8 space-y-4">
+                <h3 className="text-2xl text-gray-900">Andrea</h3>
+                <p className="text-lg text-gray-600">
+                  Native German speaker with over 25 years of professional
+                  teaching experience. Andrea specializes in exam preparation
+                  and brings a unique perspective from living in both Germany
+                  and Canada.
+                </p>
+                <Link
+                  to="/meet-andrea"
+                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors text-lg font-medium"
+                >
+                  Learn more about Andrea
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
             </div>
           </div>
 

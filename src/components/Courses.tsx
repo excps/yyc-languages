@@ -5,50 +5,53 @@ import { Check } from "lucide-react";
 const courses = [
   {
     level: "Beginner",
-    subtitle: "A1 - A2",
-    description: "Start your German journey with fundamental grammar, vocabulary, and everyday conversations.",
+    description:
+      "Start your German journey with fundamental grammar, vocabulary, and everyday conversations.",
     features: [
       "Basic grammar and sentence structure",
       "Essential vocabulary (1000+ words)",
       "Pronunciation and listening skills",
       "Simple conversations and dialogues",
       "Cultural introduction",
-      "Travel and living in Germany"
+      "Travel and living in Germany",
     ],
+    courseLevel: "A1 - A2",
     color: "bg-gray-100 border-gray-300",
-    titleColor: "text-gray-700"
+    titleColor: "text-gray-700",
   },
   {
     level: "Intermediate",
-    subtitle: "B1 - B2",
-    description: "Build confidence with complex grammar, expand your vocabulary, and engage in detailed discussions.",
+    description:
+      "Build confidence with complex grammar, expand your vocabulary, and engage in detailed discussions.",
     features: [
       "Advanced grammar structures",
       "Vocabulary expansion (3000+ words)",
       "Reading comprehension",
       "Practicing real-life conversations",
       "Writing skills development",
-       "Basic Business German"
+      "Basic Business German",
     ],
+    courseLevel: "B1 - B2",
     color: "bg-red-50 border-red-200",
     titleColor: "text-red-600",
     // popular: true
   },
   {
     level: "Advanced",
-    subtitle: "C1 - C2",
-    description: "Achieve fluency with sophisticated expression, nuanced understanding, and near-native proficiency.",
+    description:
+      "Achieve fluency with sophisticated expression, nuanced understanding, and near-native proficiency.",
     features: [
       "Complex language structures",
       "Idiomatic expressions",
       "Professional and academic fluency",
       "Literature and media analysis",
       "Exam preparation (Goethe, Telc)",
-      "Cultural immersion"
+      "Cultural immersion",
     ],
+    courseLevel: "C1 - C2",
     color: "bg-amber-50 border-amber-200",
-    titleColor: "text-amber-600"
-  }
+    titleColor: "text-amber-600",
+  },
 ];
 
 export function Courses() {
@@ -60,16 +63,23 @@ export function Courses() {
             Programs for Every Level
           </h2>
           <p className="text-xl text-gray-600">
-            Tailored German lessons for beginners, intermediate learners, and advanced speakers. We have the right course for you!
-
+            Tailored German lessons for beginners, intermediate learners, and
+            advanced speakers. We have the right course for you!
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {courses.map((course, index) => (
-            <Card key={index} className={`p-8 ${course.color} border-2 relative overflow-hidden flex flex-col h-full`}>
+            <Card
+              key={index}
+              className={`p-8 ${course.color} border-2 relative overflow-hidden flex flex-col h-full`}
+            >
               <div className="flex-grow">
                 <div className="mb-6">
-                  <h3 className={`text-2xl font-bold ${course.titleColor} mb-2`}>{course.level}</h3>
+                  <h3
+                    className={`text-2xl font-bold ${course.titleColor} mb-2`}
+                  >
+                    {course.level}
+                  </h3>
                   <p className="text-gray-600">{course.subtitle}</p>
                 </div>
                 <p className="text-gray-600 mb-8">{course.description}</p>
@@ -82,14 +92,19 @@ export function Courses() {
                   ))}
                 </ul>
               </div>
+              <div className={`text-lg font-semibold ${course.titleColor} mb-4 text-center`}>
+                {course.courseLevel}
+              </div>
               <Button
                 className={`w-full ${
                   course.popular
-                    ? 'bg-blue-600 hover:bg-blue-700'
-                    : 'bg-gray-900 hover:bg-gray-800'
+                    ? "bg-blue-600 hover:bg-blue-700"
+                    : "bg-gray-900 hover:bg-gray-800"
                 }`}
                 onClick={() => {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 Get Started
