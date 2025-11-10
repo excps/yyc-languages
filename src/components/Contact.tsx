@@ -62,7 +62,10 @@ ${formData.message || "Not provided"}
   };
 
   return (
-    <div id="contact" className="py-20 bg-white">
+    <div
+      id="contact"
+      className="py-16 relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-gray-50"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl text-gray-900 mb-4">
@@ -166,13 +169,44 @@ ${formData.message || "Not provided"}
             </Card>
           </div>
           <div className="space-y-8">
-            <div className="rounded-2xl overflow-hidden shadow-lg">
-              <ImageWithFallback
-                src="/images/german-flag.png"
-                alt="German flag"
-                className="w-full h-64 object-contain"
-              />
-            </div>
+            <Card className="p-8 bg-gradient-to-br from-blue-50 to-white">
+              <h3 className="text-2xl text-gray-900 mb-6">Why Choose YYC-Languages?</h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-semibold">
+                    1
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-1">Personalized Learning</h4>
+                    <p className="text-gray-600">
+                      One-on-one lessons tailored to your goals, learning style, and pace
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-semibold">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-1">Native German Speaker</h4>
+                    <p className="text-gray-600">
+                      Learn from Andrea, a native speaker with 25+ years of teaching experience
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-semibold">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-1">Flexible & Convenient</h4>
+                    <p className="text-gray-600">
+                      Schedule lessons that fit your lifestyle, online or in-person
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Card>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">

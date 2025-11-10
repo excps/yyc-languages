@@ -82,7 +82,7 @@ export function Navigation() {
             )}
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+              className="hidden text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
@@ -157,7 +157,7 @@ export function Navigation() {
                 setTheme(theme === 'dark' ? 'light' : 'dark');
                 setIsMenuOpen(false);
               }}
-              className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded flex items-center gap-2"
+              className="hidden w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded flex items-center gap-2"
             >
               {theme === 'dark' ? (
                 <Sun className="w-5 h-5" />

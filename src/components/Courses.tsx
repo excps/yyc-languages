@@ -56,8 +56,11 @@ const courses = [
 
 export function Courses() {
   return (
-    <div id="courses" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      id="courses"
+      className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-gray-50"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-16">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl text-gray-900 mb-4">
             Programs for Every Level
@@ -83,7 +86,7 @@ export function Courses() {
                   <p className="text-gray-600">{course.subtitle}</p>
                 </div>
                 <p className="text-gray-600 mb-8">{course.description}</p>
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-2 mb-4">
                   {course.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
@@ -92,15 +95,13 @@ export function Courses() {
                   ))}
                 </ul>
               </div>
-              <div className={`text-lg font-semibold ${course.titleColor} mb-4 text-center`}>
-                {course.courseLevel}
+              <div
+                className={`text-lg font-semibold ${course.titleColor} text-center`}
+              >
+                (equivalent) {course.courseLevel}
               </div>
               <Button
-                className={`w-full ${
-                  course.popular
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-gray-900 hover:bg-gray-800"
-                }`}
+                className="w-full bg-blue-600 hover:bg-blue-700"
                 onClick={() => {
                   document
                     .getElementById("contact")
