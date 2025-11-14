@@ -244,3 +244,4 @@ Use `ImageWithFallback` component from `src/components/general/` for external im
 - **Environment variables**: Support for runtime configuration via Docker
 - **Remote deployment**: Supports rsync deployment to remote server (doc0)
 - **Git-based versioning**: Docker images tagged with branch names automatically
+- always check @package.json file first if you can finde an action already setup doing the task
