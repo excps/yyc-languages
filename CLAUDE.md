@@ -21,6 +21,35 @@ npm run dev          # Start development server (runs on port 3000)
 npm run build        # Build for production (output to ./build directory)
 ```
 
+### Version Control & Commits
+This project uses semantic versioning with branch names (e.g., v0.2.1, v0.2.2).
+
+**Automated Version Commit Workflow**:
+```bash
+npm run commit "your commit message"
+```
+
+This command automatically:
+1. Detects current version branch (e.g., v0.2.1)
+2. Increments patch version (e.g., v0.2.2)
+3. Creates new branch with incremented version
+4. Updates package.json version number
+5. Stages all changes and commits with prefixed message
+6. Pushes the new branch to remote repository
+
+**Example**:
+```bash
+npm run commit "added new feature"
+# Creates branch v0.2.2 with commit message: "v0.2.2 added new feature"
+```
+
+**Requirements**:
+- Must be on a version branch (v#.#.#) for the script to work
+- Script will fail if target version branch already exists
+
+**Manual Commits**:
+If you need to commit without incrementing the version, use standard git commands.
+
 ### Deployment
 ```bash
 make sync            # Alternative rsync (excludes node_modules)

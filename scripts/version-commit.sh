@@ -69,6 +69,15 @@ echo ""
 echo "✅ Successfully created version $NEW_VERSION"
 echo "   Updated package.json and committed changes"
 echo ""
-echo "Next steps:"
-echo "  - Push to remote: git push -u origin $NEW_VERSION"
-echo "  - Or continue working on this version"
+echo "Pushing to remote repository..."
+git push -u origin $NEW_VERSION
+
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "✅ Successfully pushed $NEW_VERSION to remote"
+else
+    echo ""
+    echo "❌ Failed to push to remote"
+    echo "   You can manually push with: git push -u origin $NEW_VERSION"
+    exit 1
+fi
