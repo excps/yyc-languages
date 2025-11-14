@@ -174,28 +174,51 @@ echo ""
 # Step 3: Update image version in stack file
 echo "3️⃣  Updating image version..."
 echo "   Current stack file preview:"
-echo "$STACK_FILE" | grep -A 2 -B 2 "image:" || echo "   (no image line found)"
+echo "$STACK_FILE" | grep -A 2 -B 2 "image:" || {
+    echo "   (no 'image:' line found - showing full stack file)"
+    echo ""
+    echo "━━━━━━━━━━ FULL STACK FILE ━━━━━━━━━━"
+    echo "$STACK_FILE"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
 echo ""
 
-# Replace the image line with new version
-UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image: ${REGISTRY}/${IMAGE_NAME}:v[0-9\.]*|image: ${NEW_IMAGE}|g")
+# Try multiple patterns to find and replace the image line
+UPDATED_STACK_FILE=""
 
-# Check if replacement was successful
+# Pattern 1: With localhost:5001 registry and version
+UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${REGISTRY}/${IMAGE_NAME}:v[0-9\.]*|image: ${NEW_IMAGE}|g")
+
 if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
-    echo "⚠️  Warning: No image line matched the pattern"
-    echo "   Looking for: image: ${REGISTRY}/${IMAGE_NAME}:vX.X.X"
-    echo "   Trying alternative patterns..."
+    # Pattern 2: Without registry prefix
+    UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${IMAGE_NAME}:v[0-9\.]*|image: ${NEW_IMAGE}|g")
+fi
 
-    # Try without registry prefix
-    UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image: ${IMAGE_NAME}:v[0-9\.]*|image: ${NEW_IMAGE}|g")
+if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
+    # Pattern 3: Any version tag format (not just v#.#.#)
+    UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${REGISTRY}/${IMAGE_NAME}:[^[:space:]]*|image: ${NEW_IMAGE}|g")
+fi
 
-    if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
-        echo "❌ Error: Could not find image line to update"
-        echo ""
-        echo "Stack file content:"
-        echo "$STACK_FILE"
-        exit 1
-    fi
+if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
+    # Pattern 4: Just image name with any tag
+    UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${IMAGE_NAME}:[^[:space:]]*|image: ${NEW_IMAGE}|g")
+fi
+
+# Check if any replacement was successful
+if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
+    echo "❌ Error: Could not find image line to update"
+    echo ""
+    echo "Tried patterns:"
+    echo "  1. image: ${REGISTRY}/${IMAGE_NAME}:v*"
+    echo "  2. image: ${IMAGE_NAME}:v*"
+    echo "  3. image: ${REGISTRY}/${IMAGE_NAME}:*"
+    echo "  4. image: ${IMAGE_NAME}:*"
+    echo ""
+    echo "Full stack file content:"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "$STACK_FILE"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    exit 1
 fi
 
 echo "✅ Updated to: $NEW_IMAGE"
