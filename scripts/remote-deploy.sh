@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Remote deployment script
-# Deploys the latest version to the build server
+# Remote build script
+# Builds the latest Docker image on the remote build server
 
 # Configuration
 REMOTE_USER="andi"
@@ -75,36 +75,17 @@ fi
 echo "✅ Docker image built successfully"
 echo ""
 
-# Step 6: Deploy via docker-compose
-echo "6️⃣  Deploying new version..."
-run_remote "cd $REMOTE_PATH && make compose-up"
-
-if [ $? -ne 0 ]; then
-    echo "❌ Deployment failed"
-    exit 1
-fi
-echo "✅ Deployment successful"
-echo ""
-
-# Step 7: Verify deployment
-echo "7️⃣  Verifying deployment..."
-sleep 3
-run_remote "cd $REMOTE_PATH && docker ps | grep yyc-languages"
-
-if [ $? -eq 0 ]; then
-    echo "✅ Container is running"
-else
-    echo "⚠️  Warning: Could not verify container status"
-fi
-echo ""
-
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "🎉 Deployment complete!"
+echo "🎉 Build complete!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-echo "Deployed version: $LATEST_BRANCH"
+echo "Built version: $LATEST_BRANCH"
 echo "Remote host: $REMOTE_HOST"
 echo "Remote path: $REMOTE_PATH"
 echo ""
-echo "To check logs, run:"
-echo "  ssh $REMOTE_USER@$REMOTE_HOST 'cd $REMOTE_PATH && make compose-logs'"
+echo "Docker images:"
+echo "  - yyc-languages:$LATEST_BRANCH"
+echo "  - yyc-languages:latest"
+echo ""
+echo "To deploy the container manually, run:"
+echo "  ssh $REMOTE_HOST 'cd $REMOTE_PATH && make compose-up'"
