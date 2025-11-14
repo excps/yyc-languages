@@ -74,13 +74,29 @@ portainer_api() {
 
 # Step 1: Get stack ID by name
 echo "1️⃣  Finding stack '$STACK_NAME'..."
-STACK_ID=$(portainer_api GET "/api/stacks" | jq -r ".[] | select(.Name==\"$STACK_NAME\") | .Id")
+STACKS_RESPONSE=$(portainer_api GET "/api/stacks")
+
+# Check if response is valid JSON
+if ! echo "$STACKS_RESPONSE" | jq empty 2>/dev/null; then
+    echo "❌ Error: Invalid response from Portainer API"
+    echo ""
+    echo "Response received:"
+    echo "$STACKS_RESPONSE"
+    echo ""
+    echo "Possible issues:"
+    echo "  - PORTAINER_TOKEN is invalid or expired"
+    echo "  - PORTAINER_URL is incorrect (currently: $PORTAINER_URL)"
+    echo "  - Portainer is not running or unreachable"
+    exit 1
+fi
+
+STACK_ID=$(echo "$STACKS_RESPONSE" | jq -r ".[] | select(.Name==\"$STACK_NAME\") | .Id")
 
 if [ -z "$STACK_ID" ] || [ "$STACK_ID" = "null" ]; then
     echo "❌ Error: Stack '$STACK_NAME' not found"
     echo ""
     echo "Available stacks:"
-    portainer_api GET "/api/stacks" | jq -r '.[].Name'
+    echo "$STACKS_RESPONSE" | jq -r '.[].Name'
     exit 1
 fi
 
