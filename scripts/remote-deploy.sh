@@ -7,14 +7,15 @@
 REMOTE_USER="andi"
 REMOTE_HOST="doc0"
 REMOTE_PATH="/home/andi/docker/yyc-languages"
-SSH_KEY="-i ~/.ssh/ed25519_doc0"  # Add your SSH key path if needed, e.g., "-i ~/.ssh/id_rsa"
+# SSH_KEY="-i ~/.ssh/ed25519_doc0"  # Add your SSH key path if needed, e.g., "-i ~/.ssh/id_rsa"
 
 echo "🚀 Starting remote deployment to $REMOTE_HOST"
 echo ""
 
 # Function to run remote commands
 run_remote() {
-    ssh $SSH_KEY $REMOTE_USER@$REMOTE_HOST "$1"
+    # ssh $SSH_KEY $REMOTE_USER@$REMOTE_HOST "$1"
+    ssh $REMOTE_HOST "$1"
 }
 
 # Step 1: Check SSH connection
