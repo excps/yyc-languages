@@ -50,6 +50,22 @@ npm run commit "added new feature"
 **Manual Commits**:
 If you need to commit without incrementing the version, use standard git commands.
 
+**Syncing with Latest Changes**:
+```bash
+npm run pull-latest
+```
+
+This command automatically:
+1. Fetches all changes from remote repository
+2. Identifies the latest version branch (highest version number)
+3. Merges the latest branch into your current branch (with confirmation)
+4. If you're already on the latest branch, pulls the latest changes
+
+**Example use cases**:
+- You're on `v0.2.1` and want to merge changes from `v0.2.3`
+- You want to update your current branch with the latest remote changes
+- You need to sync your local repository with the remote
+
 ### Deployment
 ```bash
 make sync            # Alternative rsync (excludes node_modules)

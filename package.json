@@ -1,6 +1,6 @@
 {
       "name": "yyclanguages.ca",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "private": true,
       "type": "module",
       "dependencies": {
@@ -61,6 +61,7 @@
             "build": "vite build",
             "preview": "vite preview",
             "sync": "rsync -avz --delete ./ doc0:/home/andi/docker/yyc-languages/",
-            "commit": "./scripts/version-commit.sh"
+            "commit": "./scripts/version-commit.sh",
+            "pull-latest": "./scripts/sync-latest.sh"
       }
 }
