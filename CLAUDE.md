@@ -52,7 +52,7 @@ If you need to commit without incrementing the version, use standard git command
 
 **Syncing with Latest Changes**:
 ```bash
-npm run pull-latest
+npm run pull
 ```
 
 This command automatically:
