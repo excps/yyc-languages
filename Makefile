@@ -111,16 +111,16 @@ docker-push:
 
 # Docker Compose Commands
 compose-up:
-	@echo "Starting services with docker-compose..."
-	docker-compose up -d
+	@echo "Starting services with docker compose..."
+	docker compose up -d
 
 compose-down:
-	@echo "Stopping services with docker-compose..."
-	docker-compose down
+	@echo "Stopping services with docker compose..."
+	docker compose down
 
 compose-logs:
-	@echo "Showing docker-compose logs..."
-	docker-compose logs -f $(COMPOSE_SERVICE)
+	@echo "Showing docker compose logs..."
+	docker compose logs -f $(COMPOSE_SERVICE)
 
 # Full Deployment Workflow
 deploy: build docker-build docker-push
