@@ -67,8 +67,30 @@ This command automatically:
 - You need to sync your local repository with the remote
 
 ### Deployment
+
+**Remote Deployment (Automated)**:
 ```bash
-make sync            # Alternative rsync (excludes node_modules)
+npm run deploy
+```
+
+This command performs a complete automated deployment to the build server (doc0):
+1. SSH into the remote build server
+2. Fetches latest code from GitHub
+3. Checks out the latest version branch (highest version number)
+4. Stops existing containers
+5. Builds new Docker image using Makefile
+6. Deploys via docker-compose
+7. Verifies container is running
+
+**Remote server details**:
+- Host: doc0
+- User: andi
+- Path: /home/andi/docker/yyc-languages
+
+**File Sync (Development)**:
+```bash
+npm run sync         # Rsync files to remote (excludes node_modules)
+make sync            # Alternative make command
 ```
 
 ### Docker Development
