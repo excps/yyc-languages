@@ -68,28 +68,48 @@ This command automatically:
 
 ### Deployment
 
-**Remote Build (Automated)**:
+**Full Deployment (Automated)**:
 ```bash
 npm run deploy
 ```
 
-This command builds the latest Docker image on the build server (doc0):
+This command performs a complete deployment to the build server (doc0):
 1. SSH into the remote build server
 2. Fetches latest code from GitHub
 3. Checks out the latest version branch (highest version number)
-4. Stops existing containers
-5. Builds new Docker image using Makefile
-6. Cleans up old Docker images (keeps 3 most recent unique images, removes images >14 days old)
+4. Builds new Docker image using Makefile
+5. Pushes image to localhost:5001 registry
+6. Updates Portainer stack with new image version via API
+7. Cleans up old Docker images (keeps 3 most recent unique images, removes images >14 days old)
 
-**Note**: This script only builds the image. To deploy the container, manually run:
+**Result**: Portainer automatically pulls the new image and redeploys the stack.
+
+**Portainer Update Only**:
 ```bash
-ssh doc0 'cd /home/andi/docker/yyc-languages && make compose-up'
+npm run portainer-update <version>
 ```
+
+Updates the Portainer stack to use a specific image version without rebuilding:
+```bash
+npm run portainer-update v0.2.14
+```
+
+**Requirements**:
+- `PORTAINER_TOKEN` environment variable must be set on remote server
+- To create an API token:
+  1. Login to Portainer at http://doc0:9000
+  2. Go to User menu > My account
+  3. Navigate to 'Access tokens' section
+  4. Click 'Add access token'
+  5. Set on remote: `export PORTAINER_TOKEN='your-token-here'`
 
 **Remote server details**:
 - Host: doc0
 - User: andi
 - Path: /home/andi/docker/yyc-languages
+- Registry: localhost:5001
+- Portainer: http://doc0:9000
+- Stack name: yyclang
 
 **File Sync (Development)**:
 ```bash
@@ -99,10 +119,12 @@ make sync            # Alternative make command
 
 ### Docker Development
 ```bash
-make dev-full        # Install deps and start development server
-make deploy          # Build React app and create Docker image
-make compose-up      # Start Docker container on port 8080
-make compose-down    # Stop Docker container
+make dev-full         # Install deps and start development server
+make docker-build     # Build Docker image with version tags
+make docker-push-local # Push image to localhost:5001 registry
+make compose-up       # Start Docker container on port 8080
+make compose-down     # Stop Docker container
+make deploy           # Full workflow: build + push to registry
 ```
 
 Note: There are no test scripts or linting commands configured in this project.

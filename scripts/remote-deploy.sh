@@ -58,14 +58,8 @@ fi
 echo "✅ Checked out $LATEST_BRANCH"
 echo ""
 
-# Step 4: Stop existing containers
-echo "4️⃣  Stopping existing containers..."
-run_remote "cd $REMOTE_PATH && make compose-down || true"
-echo "✅ Containers stopped"
-echo ""
-
-# Step 5: Build new Docker image
-echo "5️⃣  Building Docker image..."
+# Step 4: Build new Docker image
+echo "4️⃣  Building Docker image..."
 run_remote "cd $REMOTE_PATH && make docker-build"
 
 if [ $? -ne 0 ]; then
@@ -75,8 +69,31 @@ fi
 echo "✅ Docker image built successfully"
 echo ""
 
-# Step 6: Cleanup old images
-echo "6️⃣  Cleaning up old Docker images..."
+# Step 5: Push image to local registry
+echo "5️⃣  Pushing image to localhost:5001 registry..."
+run_remote "cd $REMOTE_PATH && make docker-push-local"
+
+if [ $? -ne 0 ]; then
+    echo "❌ Docker push failed"
+    exit 1
+fi
+echo "✅ Image pushed to registry"
+echo ""
+
+# Step 6: Update Portainer stack
+echo "6️⃣  Updating Portainer stack..."
+run_remote "cd $REMOTE_PATH && PORTAINER_URL=http://localhost:9000 ./scripts/portainer-update.sh $LATEST_BRANCH"
+
+if [ $? -ne 0 ]; then
+    echo "⚠️  Warning: Portainer update failed (continuing anyway)"
+    echo "   You can manually update the stack or check PORTAINER_TOKEN"
+else
+    echo "✅ Portainer stack updated"
+fi
+echo ""
+
+# Step 7: Cleanup old images
+echo "7️⃣  Cleaning up old Docker images..."
 echo "   Keeping: latest 3 unique images"
 
 # Get the 3 most recent unique image IDs to keep
@@ -94,16 +111,16 @@ echo "✅ Cleanup complete"
 echo ""
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "🎉 Build complete!"
+echo "🎉 Deployment complete!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-echo "Built version: $LATEST_BRANCH"
+echo "Deployed version: $LATEST_BRANCH"
 echo "Remote host: $REMOTE_HOST"
 echo "Remote path: $REMOTE_PATH"
 echo ""
-echo "Docker images:"
-echo "  - yyc-languages:$LATEST_BRANCH"
-echo "  - yyc-languages:latest"
+echo "Docker images (local registry):"
+echo "  - localhost:5001/yyc-languages:$LATEST_BRANCH"
+echo "  - localhost:5001/yyc-languages:latest"
 echo ""
-echo "To deploy the container manually, run:"
-echo "  ssh $REMOTE_HOST 'cd $REMOTE_PATH && make compose-up'"
+echo "Portainer stack updated and redeployed automatically"
+echo "Check status at: http://$REMOTE_HOST:9000/#!/stacks"

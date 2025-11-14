@@ -109,6 +109,17 @@ docker-push:
 	docker tag $(IMAGE_LATEST) $(REGISTRY)/$(IMAGE_LATEST)
 	docker push $(REGISTRY)/$(IMAGE_LATEST)
 
+docker-push-local:
+	@echo "Pushing Docker images to local registry..."
+	@echo "  Registry: localhost:5001"
+	@echo "  Images: $(IMAGE_NAME) and $(IMAGE_LATEST)"
+	# Tag and push branch image to local registry
+	docker tag $(IMAGE_NAME) localhost:5001/$(IMAGE_NAME)
+	docker push localhost:5001/$(IMAGE_NAME)
+	# Tag and push latest image to local registry
+	docker tag $(IMAGE_LATEST) localhost:5001/$(IMAGE_LATEST)
+	docker push localhost:5001/$(IMAGE_LATEST)
+
 # Docker Compose Commands
 compose-up:
 	@echo "Starting services with docker compose..."
