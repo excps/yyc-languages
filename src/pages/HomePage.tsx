@@ -13,15 +13,15 @@ export function HomePage() {
   useEffect(() => {
     // Handle hash scrolling when navigating to home page with a hash
     if (location.hash) {
-      const id = location.hash.replace('#', '');
+      const id = location.hash.replace("#", "");
       // Use setTimeout to ensure the DOM is fully rendered
       setTimeout(() => {
         const element = document.getElementById(id);
-        element?.scrollIntoView({ behavior: 'smooth' });
+        element?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     } else {
       // Scroll to top when navigating to home page without a hash
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [location]);
 
