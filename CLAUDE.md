@@ -95,6 +95,8 @@ npm run portainer-update v0.2.14
 ```
 
 **Requirements**:
+- `jq` must be installed on remote server (for JSON parsing)
+  - Install: `sudo apt-get install -y jq` (Ubuntu/Debian)
 - `PORTAINER_TOKEN` environment variable must be set on remote server
 - To create an API token:
   1. Login to Portainer at http://doc0:9000
@@ -102,6 +104,7 @@ npm run portainer-update v0.2.14
   3. Navigate to 'Access tokens' section
   4. Click 'Add access token'
   5. Set on remote: `export PORTAINER_TOKEN='your-token-here'`
+  6. Add to ~/.bashrc or ~/.zshrc to persist
 
 **Remote server details**:
 - Host: doc0

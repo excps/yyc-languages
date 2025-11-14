@@ -26,6 +26,20 @@ echo "🔄 Updating Portainer stack: $STACK_NAME"
 echo "   New image: $NEW_IMAGE"
 echo ""
 
+# Check if jq is installed
+if ! command -v jq &> /dev/null; then
+    echo "❌ Error: jq is not installed"
+    echo ""
+    echo "jq is required to parse JSON responses from Portainer API"
+    echo ""
+    echo "To install jq:"
+    echo "  Ubuntu/Debian: sudo apt-get install -y jq"
+    echo "  CentOS/RHEL:   sudo yum install -y jq"
+    echo "  macOS:         brew install jq"
+    echo ""
+    exit 1
+fi
+
 # Check if PORTAINER_TOKEN is set
 if [ -z "$PORTAINER_TOKEN" ]; then
     echo "❌ Error: PORTAINER_TOKEN environment variable is not set"
