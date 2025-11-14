@@ -77,15 +77,15 @@ echo ""
 
 # Step 6: Cleanup old images
 echo "6️⃣  Cleaning up old Docker images..."
-echo "   Keeping: latest tag + 3 most recent version tags"
+echo "   Keeping: latest 3 unique images"
 
-# Get the 3 most recent version tags to keep
-KEEP_TAGS=$(run_remote "docker images yyc-languages --format '{{.Tag}}' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V -r | head -3 | tr '\n' '|' | sed 's/|$//'" )
+# Get the 3 most recent unique image IDs to keep
+KEEP_IMAGE_IDS=$(run_remote "docker images yyc-languages --format '{{.ID}}' | uniq | head -3 | tr '\n' '|' | sed 's/|$//'" )
 
-echo "   Preserving tags: $KEEP_TAGS and latest"
+echo "   Preserving image IDs: $KEEP_IMAGE_IDS"
 
-# Remove images older than 14 days, excluding the tags we want to keep
-run_remote "docker images yyc-languages --format '{{.Repository}}:{{.Tag}} {{.CreatedAt}}' | grep -v 'latest' | grep -vE '($KEEP_TAGS)' | awk '\$3 ~ /days?/ && \$2 > 14 {print \$1}' | xargs -r docker rmi 2>/dev/null || true"
+# Remove images older than 14 days that aren't in the keep list
+run_remote "docker images yyc-languages --format '{{.ID}} {{.CreatedAt}}' | awk '\$2 ~ /days/ && \$2+0 > 14 {print \$1}' | grep -vE '($KEEP_IMAGE_IDS)' | sort -u | xargs -r docker rmi -f 2>/dev/null || true"
 
 # Also remove dangling images
 run_remote "docker image prune -f > /dev/null 2>&1 || true"

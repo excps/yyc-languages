@@ -79,7 +79,7 @@ This command builds the latest Docker image on the build server (doc0):
 3. Checks out the latest version branch (highest version number)
 4. Stops existing containers
 5. Builds new Docker image using Makefile
-6. Cleans up old Docker images (keeps latest tag + 3 most recent version tags, removes images >14 days old)
+6. Cleans up old Docker images (keeps 3 most recent unique images, removes images >14 days old)
 
 **Note**: This script only builds the image. To deploy the container, manually run:
 ```bash
