@@ -1,5 +1,5 @@
 {
-      "name": "yyclanguages.ca website",
+      "name": "yyclanguages.ca",
       "version": "0.2.0",
       "private": true,
       "type": "module",
@@ -60,7 +60,6 @@
             "dev": "vite",
             "build": "vite build",
             "preview": "vite preview",
-            "deploy": "rsync -avz --delete ./ doc0:/home/andi/docker/yys-languages/",
-            "build:deploy": "npm run build && npm run deploy"
+            "sync": "rsync -avz --delete ./ doc0:/home/andi/docker/yyc-languages/"
       }
 }

@@ -21,6 +21,11 @@ npm run dev          # Start development server (runs on port 3000)
 npm run build        # Build for production (output to ./build directory)
 ```
 
+### Deployment
+```bash
+make sync            # Alternative rsync (excludes node_modules)
+```
+
 ### Docker Development
 ```bash
 make dev-full        # Install deps and start development server
@@ -51,10 +56,12 @@ App.tsx (Router Layout):
 ├── Navigation (sticky header, shared across all pages)
 ├── Routes:
 │   ├── / → HomePage (main landing with all sections)
-│   ├── /about → AboutPage  
+│   ├── /about → AboutPage
+│   ├── /meet-andrea → MeetAndreaPage
 │   ├── /faq → FAQPage
 │   ├── /privacy-policy → PrivacyPolicyPage
-│   └── /terms-of-service → TermsOfServicePage
+│   ├── /terms-of-service → TermsOfServicePage
+│   └── * → NotFoundPage (404)
 └── Footer (shared across all pages)
 ```
 
@@ -64,15 +71,18 @@ HomePage renders these components in order:
 ├── Hero (main landing section with CTA)
 ├── Features
 ├── Courses (3 German language levels)
+├── Testimonials (currently commented out)
 ├── Pricing (3 plans: Meet & Greet, Standard, 10 Lesson OFFER)
 └── Contact
 ```
 
 **Key Navigation Patterns**:
 - Hash-based scrolling within HomePage using `scrollIntoView({ behavior: 'smooth' })`
+- HomePage uses `useLocation` hook to detect hash changes and auto-scroll to sections
 - Sections have IDs (`courses`, `contact`, etc.) for scroll targets
 - Navigation supports both page routes and hash scrolling on home page
 - Site title "YYC-Languages" in navigation routes to home page
+- Auto-scroll to top when navigating to HomePage without hash
 
 ### Component Organization
 
@@ -84,14 +94,17 @@ src/
 ├── pages/
 │   ├── HomePage.tsx           # Main landing page with all sections
 │   ├── AboutPage.tsx          # Dedicated about page
-│   ├── FAQPage.tsx           # FAQ page
-│   ├── PrivacyPolicyPage.tsx # Privacy policy page
-│   └── TermsOfServicePage.tsx # Terms of service page
+│   ├── MeetAndreaPage.tsx     # About the tutor page
+│   ├── FAQPage.tsx            # FAQ page
+│   ├── PrivacyPolicyPage.tsx  # Privacy policy page
+│   ├── TermsOfServicePage.tsx # Terms of service page
+│   └── NotFoundPage.tsx       # 404 error page
 ├── components/
 │   ├── Navigation.tsx         # Sticky nav with mobile menu
 │   ├── Hero.tsx              # Landing section with CTA
 │   ├── Features.tsx          # Feature grid
 │   ├── Courses.tsx           # Course offerings
+│   ├── Testimonials.tsx      # Customer testimonials
 │   ├── Pricing.tsx           # Pricing tiers
 │   ├── Contact.tsx           # Contact form
 │   ├── Footer.tsx            # Footer with links
@@ -184,3 +197,5 @@ Use `ImageWithFallback` component from `src/components/general/` for external im
 - **Docker ready**: Full containerization support for production deployment
 - **Mobile-first responsive**: Uses Tailwind's responsive utilities (`sm:`, `md:`, `lg:`)
 - **Environment variables**: Support for runtime configuration via Docker
+- **Remote deployment**: Supports rsync deployment to remote server (doc0)
+- **Git-based versioning**: Docker images tagged with branch names automatically
