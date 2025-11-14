@@ -75,6 +75,24 @@ fi
 echo "✅ Docker image built successfully"
 echo ""
 
+# Step 6: Cleanup old images
+echo "6️⃣  Cleaning up old Docker images..."
+echo "   Keeping: latest tag + 3 most recent version tags"
+
+# Get the 3 most recent version tags to keep
+KEEP_TAGS=$(run_remote "docker images yyc-languages --format '{{.Tag}}' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V -r | head -3 | tr '\n' '|' | sed 's/|$//'" )
+
+echo "   Preserving tags: $KEEP_TAGS and latest"
+
+# Remove images older than 14 days, excluding the tags we want to keep
+run_remote "docker images yyc-languages --format '{{.Repository}}:{{.Tag}} {{.CreatedAt}}' | grep -v 'latest' | grep -vE '($KEEP_TAGS)' | awk '\$3 ~ /days?/ && \$2 > 14 {print \$1}' | xargs -r docker rmi 2>/dev/null || true"
+
+# Also remove dangling images
+run_remote "docker image prune -f > /dev/null 2>&1 || true"
+
+echo "✅ Cleanup complete"
+echo ""
+
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "🎉 Build complete!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
