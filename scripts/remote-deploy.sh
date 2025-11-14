@@ -82,7 +82,7 @@ echo ""
 
 # Step 6: Update Portainer stack
 echo "6️⃣  Updating Portainer stack..."
-run_remote "source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null || true && cd $REMOTE_PATH && PORTAINER_URL=http://localhost:9000 ./scripts/portainer-update.sh $LATEST_BRANCH"
+run_remote "source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null || true && cd $REMOTE_PATH && PORTAINER_URL=https://docker.local:9443 ./scripts/portainer-update.sh $LATEST_BRANCH"
 
 if [ $? -ne 0 ]; then
     echo "⚠️  Warning: Portainer update failed (continuing anyway)"
@@ -123,4 +123,4 @@ echo "  - localhost:5001/yyc-languages:$LATEST_BRANCH"
 echo "  - localhost:5001/yyc-languages:latest"
 echo ""
 echo "Portainer stack updated and redeployed automatically"
-echo "Check status at: http://$REMOTE_HOST:9000/#!/stacks"
+echo "Check status at: https://docker.local:9443/#!/stacks"

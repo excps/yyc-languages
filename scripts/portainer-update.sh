@@ -6,7 +6,7 @@
 set -e
 
 # Configuration
-PORTAINER_URL="${PORTAINER_URL:-http://localhost:9000}"
+PORTAINER_URL="${PORTAINER_URL:-https://docker.local:9443}"
 PORTAINER_TOKEN="${PORTAINER_TOKEN:-}"
 STACK_NAME="${STACK_NAME:-yyclang}"
 IMAGE_NAME="yyc-languages"
@@ -45,11 +45,12 @@ if [ -z "$PORTAINER_TOKEN" ]; then
     echo "❌ Error: PORTAINER_TOKEN environment variable is not set"
     echo ""
     echo "To create an API token:"
-    echo "1. Login to Portainer at $PORTAINER_URL"
+    echo "1. Login to Portainer at https://docker.local:9443"
     echo "2. Go to User menu > My account"
     echo "3. Navigate to 'Access tokens' section"
     echo "4. Click 'Add access token'"
     echo "5. Export the token: export PORTAINER_TOKEN='your-token-here'"
+    echo "6. Add to ~/.bashrc or ~/.zshrc to persist"
     exit 1
 fi
 
@@ -83,10 +84,30 @@ if ! echo "$STACKS_RESPONSE" | jq empty 2>/dev/null; then
     echo "Response received:"
     echo "$STACKS_RESPONSE"
     echo ""
+    exit 1
+fi
+
+# Check if response is an error object
+if echo "$STACKS_RESPONSE" | jq -e 'has("message")' > /dev/null 2>&1; then
+    ERROR_MSG=$(echo "$STACKS_RESPONSE" | jq -r '.message')
+    echo "❌ Error from Portainer API: $ERROR_MSG"
+    echo ""
+    echo "Response details:"
+    echo "$STACKS_RESPONSE" | jq .
+    echo ""
     echo "Possible issues:"
     echo "  - PORTAINER_TOKEN is invalid or expired"
     echo "  - PORTAINER_URL is incorrect (currently: $PORTAINER_URL)"
-    echo "  - Portainer is not running or unreachable"
+    echo "  - Insufficient permissions for the API token"
+    exit 1
+fi
+
+# Check if response is an array
+if ! echo "$STACKS_RESPONSE" | jq -e 'type == "array"' > /dev/null 2>&1; then
+    echo "❌ Error: Unexpected response format from Portainer API"
+    echo ""
+    echo "Expected an array of stacks, got:"
+    echo "$STACKS_RESPONSE" | jq .
     exit 1
 fi
 
@@ -95,8 +116,13 @@ STACK_ID=$(echo "$STACKS_RESPONSE" | jq -r ".[] | select(.Name==\"$STACK_NAME\")
 if [ -z "$STACK_ID" ] || [ "$STACK_ID" = "null" ]; then
     echo "❌ Error: Stack '$STACK_NAME' not found"
     echo ""
-    echo "Available stacks:"
-    echo "$STACKS_RESPONSE" | jq -r '.[].Name'
+    STACK_COUNT=$(echo "$STACKS_RESPONSE" | jq 'length')
+    if [ "$STACK_COUNT" -eq 0 ]; then
+        echo "No stacks found in Portainer"
+    else
+        echo "Available stacks:"
+        echo "$STACKS_RESPONSE" | jq -r '.[].Name'
+    fi
     exit 1
 fi
 
