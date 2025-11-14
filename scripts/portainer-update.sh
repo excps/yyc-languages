@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Portainer Stack Update Script
 # Updates a Portainer stack with a new image version from localhost:5001 registry
