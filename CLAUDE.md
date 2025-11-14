@@ -99,7 +99,7 @@ npm run portainer-update v0.2.14
   - Install: `sudo apt-get install -y jq` (Ubuntu/Debian)
 - `PORTAINER_TOKEN` environment variable must be set on remote server
 - To create an API token:
-  1. Login to Portainer at https://docker.local:9443
+  1. Login to Portainer at http://192.168.1.10:9000
   2. Go to User menu > My account
   3. Navigate to 'Access tokens' section
   4. Click 'Add access token'
@@ -111,7 +111,7 @@ npm run portainer-update v0.2.14
 - User: andi
 - Path: /home/andi/docker/yyc-languages
 - Registry: localhost:5001
-- Portainer: https://docker.local:9443
+- Portainer: http://192.168.1.10:9000
 - Stack name: yyclang
 
 **File Sync (Development)**:

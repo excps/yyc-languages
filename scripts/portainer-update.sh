@@ -6,7 +6,7 @@
 set -e
 
 # Configuration
-PORTAINER_URL="${PORTAINER_URL:-https://docker.local:9443}"
+PORTAINER_URL="${PORTAINER_URL:-http://192.168.1.10:9000}"
 PORTAINER_TOKEN="${PORTAINER_TOKEN:-}"
 STACK_NAME="${STACK_NAME:-yyclang}"
 IMAGE_NAME="yyc-languages"
@@ -45,7 +45,7 @@ if [ -z "$PORTAINER_TOKEN" ]; then
     echo "❌ Error: PORTAINER_TOKEN environment variable is not set"
     echo ""
     echo "To create an API token:"
-    echo "1. Login to Portainer at https://docker.local:9443"
+    echo "1. Login to Portainer at http://192.168.1.10:9000"
     echo "2. Go to User menu > My account"
     echo "3. Navigate to 'Access tokens' section"
     echo "4. Click 'Add access token'"
@@ -61,13 +61,13 @@ portainer_api() {
     local data="$3"
 
     if [ -n "$data" ]; then
-        curl -s -k -X "$method" \
+        curl -s -X "$method" \
             -H "X-API-Key: $PORTAINER_TOKEN" \
             -H "Content-Type: application/json" \
             -d "$data" \
             "${PORTAINER_URL}${endpoint}"
     else
-        curl -s -k -X "$method" \
+        curl -s -X "$method" \
             -H "X-API-Key: $PORTAINER_TOKEN" \
             "${PORTAINER_URL}${endpoint}"
     fi
@@ -78,7 +78,7 @@ echo "0️⃣  Checking Portainer connectivity..."
 echo "   URL: $PORTAINER_URL"
 
 # Try to connect to Portainer (with timeout)
-HEALTH_CHECK=$(curl -s -k --connect-timeout 5 --max-time 10 -o /dev/null -w "%{http_code}" "${PORTAINER_URL}/api/system/status" 2>/dev/null)
+HEALTH_CHECK=$(curl -s --connect-timeout 5 --max-time 10 -o /dev/null -w "%{http_code}" "${PORTAINER_URL}/api/system/status" 2>/dev/null)
 
 if [ "$HEALTH_CHECK" = "000" ]; then
     echo "❌ Error: Cannot reach Portainer at $PORTAINER_URL"
@@ -87,10 +87,9 @@ if [ "$HEALTH_CHECK" = "000" ]; then
     echo "  - Portainer is not running"
     echo "  - URL is incorrect"
     echo "  - Network/firewall blocking access"
-    echo "  - SSL certificate issues (using -k flag to bypass)"
     echo ""
     echo "Try manually:"
-    echo "  curl -k $PORTAINER_URL/api/system/status"
+    echo "  curl $PORTAINER_URL/api/system/status"
     exit 1
 elif [ "$HEALTH_CHECK" = "401" ] || [ "$HEALTH_CHECK" = "403" ]; then
     echo "✅ Portainer is reachable (HTTP $HEALTH_CHECK - auth required, which is expected)"
