@@ -61,17 +61,45 @@ portainer_api() {
     local data="$3"
 
     if [ -n "$data" ]; then
-        curl -s -X "$method" \
+        curl -s -k -X "$method" \
             -H "X-API-Key: $PORTAINER_TOKEN" \
             -H "Content-Type: application/json" \
             -d "$data" \
             "${PORTAINER_URL}${endpoint}"
     else
-        curl -s -X "$method" \
+        curl -s -k -X "$method" \
             -H "X-API-Key: $PORTAINER_TOKEN" \
             "${PORTAINER_URL}${endpoint}"
     fi
 }
+
+# Step 0: Check Portainer connectivity
+echo "0️⃣  Checking Portainer connectivity..."
+echo "   URL: $PORTAINER_URL"
+
+# Try to connect to Portainer (with timeout)
+HEALTH_CHECK=$(curl -s -k --connect-timeout 5 --max-time 10 -o /dev/null -w "%{http_code}" "${PORTAINER_URL}/api/system/status" 2>/dev/null)
+
+if [ "$HEALTH_CHECK" = "000" ]; then
+    echo "❌ Error: Cannot reach Portainer at $PORTAINER_URL"
+    echo ""
+    echo "Possible issues:"
+    echo "  - Portainer is not running"
+    echo "  - URL is incorrect"
+    echo "  - Network/firewall blocking access"
+    echo "  - SSL certificate issues (using -k flag to bypass)"
+    echo ""
+    echo "Try manually:"
+    echo "  curl -k $PORTAINER_URL/api/system/status"
+    exit 1
+elif [ "$HEALTH_CHECK" = "401" ] || [ "$HEALTH_CHECK" = "403" ]; then
+    echo "✅ Portainer is reachable (HTTP $HEALTH_CHECK - auth required, which is expected)"
+elif [ "$HEALTH_CHECK" = "200" ]; then
+    echo "✅ Portainer is reachable (HTTP $HEALTH_CHECK)"
+else
+    echo "⚠️  Portainer responded with HTTP $HEALTH_CHECK"
+fi
+echo ""
 
 # Step 1: Get stack ID by name
 echo "1️⃣  Finding stack '$STACK_NAME'..."
