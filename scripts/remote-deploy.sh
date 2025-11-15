@@ -4,7 +4,6 @@
 # Builds the latest Docker image on the remote build server
 
 # Configuration
-REMOTE_USER="andi"
 REMOTE_HOST="doc0"
 REMOTE_PATH="/home/andi/docker/yyc-languages"
 # SSH_KEY="-i ~/.ssh/ed25519_doc0"  # Add your SSH key path if needed, e.g., "-i ~/.ssh/id_rsa"
@@ -14,7 +13,6 @@ echo ""
 
 # Function to run remote commands
 run_remote() {
-    # ssh $SSH_KEY $REMOTE_USER@$REMOTE_HOST "$1"
     ssh $REMOTE_HOST "$1"
 }
 
@@ -69,8 +67,41 @@ fi
 echo "✅ Docker image built successfully"
 echo ""
 
-# Step 5: Push image to local registry
-echo "5️⃣  Pushing image to localhost:5001 registry..."
+# Step 5: Check if image has changed before pushing
+echo "5️⃣  Checking if image has changed..."
+
+# Get the newly built image ID
+NEW_IMAGE_ID=$(run_remote "docker images yyc-languages:$LATEST_BRANCH --format '{{.ID}}' | head -1")
+echo "   New image ID: $NEW_IMAGE_ID"
+
+# Try to pull existing image from registry and get its ID
+EXISTING_IMAGE_ID=$(run_remote "docker pull localhost:5001/yyc-languages:$LATEST_BRANCH 2>/dev/null && docker images localhost:5001/yyc-languages:$LATEST_BRANCH --format '{{.ID}}' | head -1" || echo "")
+
+if [ -n "$EXISTING_IMAGE_ID" ]; then
+    echo "   Existing image ID: $EXISTING_IMAGE_ID"
+
+    if [ "$NEW_IMAGE_ID" = "$EXISTING_IMAGE_ID" ]; then
+        echo ""
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "ℹ️  No changes detected in Docker image"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo ""
+        echo "The newly built image is identical to the existing image in the registry."
+        echo "Version: $LATEST_BRANCH"
+        echo "Image ID: $NEW_IMAGE_ID"
+        echo ""
+        echo "Deployment stopped. No push or update needed."
+        exit 0
+    else
+        echo "   Image has changed, proceeding with push..."
+    fi
+else
+    echo "   No existing image found in registry, proceeding with push..."
+fi
+echo ""
+
+# Step 6: Push image to local registry
+echo "6️⃣  Pushing image to localhost:5001 registry..."
 run_remote "cd $REMOTE_PATH && make docker-push-local"
 
 if [ $? -ne 0 ]; then
@@ -80,8 +111,8 @@ fi
 echo "✅ Image pushed to registry"
 echo ""
 
-# Step 6: Update Portainer stack
-echo "6️⃣  Updating Portainer stack..."
+# Step 7: Update Portainer stack
+echo "7️⃣  Updating Portainer stack..."
 run_remote "source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null || true && cd $REMOTE_PATH && PORTAINER_URL=http://192.168.1.10:9000 ./scripts/portainer-update.sh $LATEST_BRANCH"
 
 if [ $? -ne 0 ]; then
@@ -92,8 +123,8 @@ else
 fi
 echo ""
 
-# Step 7: Cleanup old images
-echo "7️⃣  Cleaning up old Docker images..."
+# Step 8: Cleanup old images
+echo "8️⃣  Cleaning up old Docker images..."
 echo "   Keeping: latest 3 unique images"
 
 # Get the 3 most recent unique image IDs to keep

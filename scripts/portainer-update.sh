@@ -8,7 +8,7 @@ set -e
 # Configuration
 PORTAINER_URL="${PORTAINER_URL:-http://192.168.1.10:9000}"
 PORTAINER_TOKEN="${PORTAINER_TOKEN:-}"
-STACK_NAME="${STACK_NAME:-yyclang}"
+STACK_NAME="${STACK_NAME:-yyc-languages}"
 IMAGE_NAME="yyc-languages"
 REGISTRY="localhost:5001"
 

@@ -112,7 +112,7 @@ npm run portainer-update v0.2.14
 - Path: /home/andi/docker/yyc-languages
 - Registry: localhost:5001
 - Portainer: http://192.168.1.10:9000
-- Stack name: yyclang
+- Stack name: yyc-languages
 
 **File Sync (Development)**:
 ```bash
