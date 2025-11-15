@@ -172,14 +172,28 @@ echo ""
 
 # Step 2.5: Get stack file content (file-based stacks use separate endpoint)
 echo "2.5️⃣  Fetching stack file content..."
-STACK_FILE_RESPONSE=$(portainer_api GET "/api/stacks/$STACK_ID/file")
-STACK_FILE=$(echo "$STACK_FILE_RESPONSE" | jq -r '.StackFileContent')
+
+# Use temp file to avoid shell command substitution issues with control characters
+TEMP_FILE=$(mktemp)
+trap "rm -f $TEMP_FILE" EXIT
+
+portainer_api GET "/api/stacks/$STACK_ID/file" > "$TEMP_FILE"
+
+# Extract and validate stack file content
+# Use jq -r to get raw unescaped content (converts \n to actual newlines)
+if ! STACK_FILE=$(jq -r '.StackFileContent' "$TEMP_FILE" 2>/dev/null); then
+    echo "❌ Error: Could not parse stack file content"
+    echo ""
+    echo "API Response (first 500 chars):"
+    head -c 500 "$TEMP_FILE"
+    exit 1
+fi
 
 if [ -z "$STACK_FILE" ] || [ "$STACK_FILE" = "null" ]; then
     echo "❌ Error: Could not retrieve stack file content"
     echo ""
     echo "API Response:"
-    echo "$STACK_FILE_RESPONSE" | jq .
+    cat "$TEMP_FILE"
     exit 1
 fi
 
