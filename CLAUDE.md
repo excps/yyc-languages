@@ -114,12 +114,6 @@ npm run portainer-update v0.2.14
 - Portainer: http://192.168.1.10:9000
 - Stack name: yyc-languages
 
-**File Sync (Development)**:
-```bash
-npm run sync         # Rsync files to remote (excludes node_modules)
-make sync            # Alternative make command
-```
-
 ### Docker Development
 ```bash
 make dev-full         # Install deps and start development server
@@ -293,6 +287,5 @@ Use `ImageWithFallback` component from `src/components/general/` for external im
 - **Docker ready**: Full containerization support for production deployment
 - **Mobile-first responsive**: Uses Tailwind's responsive utilities (`sm:`, `md:`, `lg:`)
 - **Environment variables**: Support for runtime configuration via Docker
-- **Remote deployment**: Supports rsync deployment to remote server (doc0)
 - **Git-based versioning**: Docker images tagged with branch names automatically
-- always check @package.json file first if you can finde an action already setup doing the task
+- always check @package.json file first if you can findan action already setup doing the task
