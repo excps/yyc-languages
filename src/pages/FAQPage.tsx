@@ -11,108 +11,132 @@ const faqData: FAQItem[] = [
   {
     category: "Getting Started",
     question: "Do I need any prior German language experience?",
-    answer: "No prior experience is necessary! We welcome complete beginners (A1 level) as well as advanced learners (up to C2). During your free Meet & Greet session, we'll assess your current level and create a personalized learning plan tailored to your starting point and goals."
+    answer:
+      "No prior experience is necessary! We welcome complete beginners (A1 level) as well as advanced learners (up to C2). During your free Meet & Greet session, we'll assess your current level and create a personalized learning plan tailored to your starting point and goals.",
   },
   {
     category: "Getting Started",
     question: "What happens during the Meet & Greet session?",
-    answer: "The Meet & Greet is a free 30-minute introductory session where we get to know each other, assess your current German level, discuss your learning goals, and create a customized lesson plan. It's also a great opportunity for you to ask questions and see if our teaching style is a good fit for you. There's no obligation to continue after this session."
+    answer:
+      "The Meet & Greet is a free 30-minute introductory session where we get to know each other, assess your current German level, discuss your learning goals, and create a customized lesson plan. It's also a great opportunity for you to ask questions and see if our teaching style is a good fit for you. There's no obligation to continue after this session.",
   },
   {
     category: "Lesson Format",
     question: "How long are the lessons?",
-    answer: "Standard lessons are 60 minutes long. This duration allows for comprehensive coverage of topics, practice exercises, and Q&A time. For intensive learners or exam preparation, we also offer 90-minute sessions upon request."
+    answer:
+      "Standard lessons are 60 minutes long. This duration allows for comprehensive coverage of topics, practice exercises, and Q&A time. For intensive learners or exam preparation, we suggest to book 90-minute sessions upon request.",
   },
   {
     category: "Lesson Format",
     question: "Are lessons conducted online or in-person?",
-    answer: "We primarily offer online lessons via Zoom or Google Meet, which provides flexibility and convenience. In-person lessons in Calgary may be available upon request and subject to scheduling and location arrangements. Online lessons are just as effective and allow for screen sharing of materials, interactive exercises, and recording capabilities."
+    answer:
+      "We primarily offer online lessons via Zoom or Google Meet, which provides flexibility and convenience. In-person lessons in Calgary may be available upon request and subject to scheduling and location arrangements. Online lessons are just as effective and allow for screen sharing of materials, interactive exercises, and recording capabilities.",
   },
   {
     category: "Lesson Format",
     question: "What does a typical lesson include?",
-    answer: "Each lesson is customized to your needs, but typically includes: review of previous material and homework, introduction of new vocabulary and grammar concepts, speaking practice and conversation, pronunciation exercises, reading comprehension, and listening activities. Lessons are interactive and focus on practical, real-world German usage."
+    answer:
+      "Each lesson is customized to your needs, but typically includes: review of previous material and homework, introduction of new vocabulary and grammar concepts, speaking practice and conversation, pronunciation exercises, reading comprehension, and listening activities. Lessons are interactive and focus on practical, real-world German usage.",
   },
   {
     category: "Scheduling",
     question: "How flexible is the scheduling?",
-    answer: "Very flexible! We work around your schedule. You can book lessons at times that work best for you, whether that's early morning, evening, or weekends. Regular weekly slots can be reserved, or you can schedule lessons on an ad-hoc basis. We understand that life gets busy, which is why we have a 24-hour cancellation policy."
+    answer:
+      "Very flexible! We work around your schedule. You can book lessons at times that work best for you, whether that's early morning, evening, or weekends. Regular weekly slots can be reserved, or you can schedule lessons on an ad-hoc basis.",
   },
   {
     category: "Scheduling",
     question: "What is your cancellation policy?",
-    answer: "We require 24 hours notice for cancellations or rescheduling. If you cancel with 24+ hours notice, you'll receive full credit for the lesson. Cancellations made with less than 24 hours notice or no-shows will forfeit the lesson. We understand emergencies happen, and we'll work with you on a case-by-case basis for exceptional circumstances."
+    answer: `After the first month: cancellation policy of 30 days ahead with a written notification (Email).
+      If student needs to cancel a scheduled lesson, the student agrees to contact the tutor at least 24 hours before the scheduled lesson. The student may contact the tutor by email or by telephone, preferably both. The student and the tutor agree to reschedule the canceled lesson as soon as possible at the tutor’s availability.
+      The student forfeits the deposit paid for a scheduled lesson if the student fails to give at least 24 hours notice. The student also forfeits the deposit if he or she is later than 20 minutes to a scheduled lesson without notifying the tutor.`,
   },
   {
     category: "Learning Materials",
     question: "Do I need to buy textbooks?",
-    answer: "No expensive textbooks required! We provide all learning materials digitally, including custom worksheets, vocabulary lists, grammar explanations, and practice exercises. Materials are tailored to your learning style and goals. If you prefer working with a specific textbook, we can incorporate that into your lessons."
+    answer:
+      "No expensive textbooks required! We provide all learning materials digitally, including custom worksheets, vocabulary lists, grammar explanations, and practice exercises. Materials are tailored to your learning style and goals. If you prefer working with a specific textbook, we can incorporate that into your lessons.",
   },
   {
     category: "Learning Materials",
     question: "Will I receive homework?",
-    answer: "Yes, homework is an essential part of language learning. You'll receive optional but highly recommended exercises to practice between lessons. The amount can be adjusted based on your schedule and learning pace. Homework typically takes 30-60 minutes and includes exercises to reinforce what you've learned in class."
+    answer:
+      "Yes, homework is an essential part of language learning. You'll receive optional but highly recommended exercises to practice between lessons. The amount can be adjusted based on your schedule and learning pace. Homework typically takes 30-60 minutes and includes exercises to reinforce what you've learned in class.",
   },
   {
     category: "Progress & Assessment",
     question: "How do you track my progress?",
-    answer: "We track your progress through regular informal assessments, homework review, and periodic comprehensive evaluations. You'll receive feedback after each lesson and detailed progress reports every 10 lessons. We follow the Common European Framework of Reference (CEFR) levels A1-C2, so you'll always know exactly where you stand."
+    answer:
+      "We track your progress through regular informal assessments, homework review, and periodic comprehensive evaluations. You'll receive feedback after each lesson and detailed progress reports every 10 lessons. We follow the Common European Framework of Reference (CEFR) levels A1-C2, so you'll always know exactly where you stand.",
   },
   {
     category: "Progress & Assessment",
     question: "How long does it take to reach fluency?",
-    answer: "This varies based on your starting level, learning pace, and time commitment. Generally, reaching conversational proficiency (B1 level) takes 200-300 hours of instruction and practice for most learners. With one lesson per week plus regular homework, you can expect to progress one CEFR level (e.g., A1 to A2) in 6-9 months. Consistency and practice outside of lessons significantly accelerate progress."
+    answer:
+      "This varies based on your starting level, learning pace, and time commitment. Generally, reaching conversational proficiency (B1 level) takes 200-300 hours of instruction and practice for most learners. With one lesson per week plus regular homework, you can expect to progress one CEFR level (e.g., A1 to A2) in 6-9 months. Consistency and practice outside of lessons significantly accelerate progress.",
   },
   {
     category: "Exam Preparation",
     question: "Can you help me prepare for German language exams?",
-    answer: "Absolutely! We specialize in preparing students for Goethe-Zertifikat (A1-C2), and Telc exams. Exam preparation includes familiarization with test format, practice with past papers, time management strategies, and targeted work on weak areas. We've helped numerous students successfully pass these exams."
+    answer:
+      "Absolutely! We specialize in preparing students for Goethe-Zertifikat (A1-C2), and Telc exams. Exam preparation includes familiarization with test format, practice with past papers, time management strategies, and targeted work on weak areas. We've helped numerous students successfully pass these exams.",
   },
   {
     category: "Exam Preparation",
     question: "How long does exam preparation take?",
-    answer: "For students at or near the target level, focused exam preparation typically takes 6-10 lessons. If you need to improve your German level before exam prep, we'll first work on building your skills to the required level, then focus on exam-specific strategies. During your Meet & Greet, we'll assess your current level and provide a realistic timeline."
+    answer:
+      "For students at or near the target level, focused exam preparation typically takes 10 lessons. If you need to improve your German level before exam prep, we'll first work on building your skills to the required level, then focus on exam-specific strategies. During your Meet & Greet, we'll assess your current level and provide a realistic timeline.",
   },
   {
     category: "Pricing & Payment",
     question: "What are your rates?",
-    answer: "Our current pricing is displayed on the Pricing section of our homepage. We offer single lessons, 5-lesson packages, and 10-lesson packages with discounted rates for larger packages. The Meet & Greet session is always free. Payment is accepted via e-transfer, credit card, or other arranged methods."
+    answer:
+      "Our current pricing is displayed on the Pricing section of our homepage. We offer single lessons and 10-lesson packages with discounted rates for larger packages. The Meet & Greet session is always free. Payment is accepted via e-transfer, cash, or other arranged methods. An invoice will outline your payments.",
   },
   {
     category: "Pricing & Payment",
     question: "Do lesson packages expire?",
-    answer: "Yes, prepaid lesson packages are valid for 6 months from the date of purchase. This ensures consistent progress and maintains learning momentum. If you have special circumstances that prevent you from using your lessons within this timeframe, please contact us to discuss options."
+    answer: `Yes, prepaid lesson packages are valid for 6 months from the date of purchase. Unused lessons after this date will be forfeited unless an
+      extension is granted at our discretion. This ensures consistent progress and maintains learning momentum. If you have special circumstances that prevent you from using your lessons within this timeframe, please contact us to discuss options.`,
   },
   {
     category: "Technical Requirements",
     question: "What do I need for online lessons?",
-    answer: "You'll need: a computer, tablet, or smartphone with a webcam and microphone, a stable internet connection (at least 5 Mbps), and Zoom or Google Meet installed. A headset is recommended for better audio quality but not required. We'll do a tech check during your Meet & Greet to ensure everything works smoothly."
+    answer:
+      "You'll need: a computer, tablet, or smartphone with a webcam and microphone, a stable internet connection (at least 5 Mbps), and Zoom or Google Meet installed. A headset is recommended for better audio quality but not required. We'll do a tech check during your Meet & Greet to ensure everything works smoothly.",
   },
   {
     category: "Technical Requirements",
     question: "What if I have technical difficulties during a lesson?",
-    answer: "Technical issues happen! If you experience problems on your end (internet outage, computer crash), we'll pause the timer and reschedule the remaining time. If the issue is on our end, you'll receive full credit for the lesson. We always test our setup before lessons to minimize disruptions."
+    answer:
+      "Technical issues happen! If you experience problems on your end (internet outage, computer crash), we'll pause the timer and reschedule the remaining time. If the issue is on our end, you'll receive full credit for the lesson. We always test our setup before lessons to minimize disruptions.",
   },
   {
     category: "Teaching Approach",
     question: "What is your teaching methodology?",
-    answer: "We use a communicative, student-centered approach that emphasizes practical usage and real-world communication. Lessons incorporate all four language skills: speaking, listening, reading, and writing. We focus on building confidence through conversation while systematically developing grammar and vocabulary. Every lesson is customized to your learning style, pace, and goals."
+    answer:
+      "We use a communicative, student-centered approach that emphasizes practical usage and real-world communication. Lessons incorporate all four language skills: speaking, listening, reading, and writing. We focus on building confidence through conversation while systematically developing grammar and vocabulary. Every lesson is customized to your learning style, pace, and goals.",
   },
   {
     category: "Teaching Approach",
-    question: "Can you help with specialized German (business, medical, academic)?",
-    answer: "Yes! We can tailor lessons to specific fields like business German, academic German for university studies, medical terminology, or any professional context. Let us know your specific needs during the Meet & Greet, and we'll design a curriculum that focuses on the vocabulary, phrases, and communication styles relevant to your field."
+    question:
+      "Can you help with specialized German (business, medical, academic)?",
+    answer:
+      "Yes! We can tailor lessons to specific fields like business German, academic German for university studies, medical terminology, or any professional context. Let us know your specific needs during the Meet & Greet, and we'll design a curriculum that focuses on the vocabulary, phrases, and communication styles relevant to your field.",
   },
   {
     category: "General",
-    question: "Can I learn German if I'm a complete beginner with no language learning experience?",
-    answer: "Absolutely! Many of our students are learning their first foreign language. We make the process approachable and enjoyable, breaking down complex concepts into manageable steps. German has logical grammar rules and many similarities to English, which actually makes it more learnable than you might think. Everyone starts somewhere, and we'll guide you every step of the way."
+    question:
+      "Can I learn German if I'm a complete beginner with no language learning experience?",
+    answer:
+      "Absolutely! Many of our students are learning their first foreign language. We make the process approachable and enjoyable, breaking down complex concepts into manageable steps. German has logical grammar rules and many similarities to English, which actually makes it more learnable than you might think. Everyone starts somewhere, and we'll guide you every step of the way.",
   },
   {
     category: "General",
     question: "Do you offer group lessons?",
-    answer: "Currently, we focus on one-on-one instruction to provide the most personalized and effective learning experience. Individual lessons allow us to tailor content, pace, and methodology specifically to you. However, if you have friends or family members interested in learning together, please contact us to discuss small group options."
-  }
+    answer:
+      "Currently, we focus on one-on-one instruction to provide the most personalized and effective learning experience. Individual lessons allow us to tailor content, pace, and methodology specifically to you. However, if you have friends or family members interested in learning together, please contact us to discuss small group options.",
+  },
 ];
 
 export function FAQPage() {
@@ -120,14 +144,18 @@ export function FAQPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const categories = ["All", ...Array.from(new Set(faqData.map(item => item.category)))];
+  const categories = [
+    "All",
+    ...Array.from(new Set(faqData.map((item) => item.category))),
+  ];
 
-  const filteredFAQs = selectedCategory === "All"
-    ? faqData
-    : faqData.filter(item => item.category === selectedCategory);
+  const filteredFAQs =
+    selectedCategory === "All"
+      ? faqData
+      : faqData.filter((item) => item.category === selectedCategory);
 
   const toggleQuestion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -138,9 +166,12 @@ export function FAQPage() {
       <div className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h1 className="text-5xl text-gray-900 mb-4">Frequently Asked Questions</h1>
+            <h1 className="text-5xl text-gray-900 mb-4">
+              Frequently Asked Questions
+            </h1>
             <p className="text-xl text-gray-600">
-              Find answers to common questions about our German language tutoring services
+              Find answers to common questions about our German language
+              tutoring services
             </p>
           </div>
 
@@ -152,8 +183,8 @@ export function FAQPage() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
                 }`}
               >
                 {category}
@@ -203,7 +234,8 @@ export function FAQPage() {
               Still have questions?
             </h2>
             <p className="text-gray-600 mb-6">
-              We're here to help! Contact us and we'll get back to you as soon as possible.
+              We're here to help! Contact us and we'll get back to you as soon
+              as possible.
             </p>
             <a
               href="mailto:info@yyclanguages.ca"
