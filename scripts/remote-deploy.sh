@@ -56,9 +56,19 @@ fi
 echo "✅ Checked out $LATEST_BRANCH"
 echo ""
 
-# Step 4: Build new Docker image
-echo "4️⃣  Building Docker image..."
-run_remote "cd $REMOTE_PATH && make docker-build"
+# Step 4: Build React app and Docker image
+echo "4️⃣  Installing dependencies and building React app..."
+run_remote "cd $REMOTE_PATH && npm install && npm run build"
+
+if [ $? -ne 0 ]; then
+    echo "❌ React build failed"
+    exit 1
+fi
+echo "✅ React app built successfully"
+echo ""
+
+echo "5️⃣  Building Docker image..."
+run_remote "cd $REMOTE_PATH && docker build -t yyc-languages:$LATEST_BRANCH -t yyc-languages:latest ."
 
 if [ $? -ne 0 ]; then
     echo "❌ Docker build failed"
@@ -67,8 +77,8 @@ fi
 echo "✅ Docker image built successfully"
 echo ""
 
-# Step 5: Check if image has changed before pushing
-echo "5️⃣  Checking if image has changed..."
+# Step 6: Check if image has changed before pushing
+echo "6️⃣  Checking if image has changed..."
 
 # Get the newly built image ID
 NEW_IMAGE_ID=$(run_remote "docker images yyc-languages:$LATEST_BRANCH --format '{{.ID}}' | head -1")
@@ -100,9 +110,9 @@ else
 fi
 echo ""
 
-# Step 6: Push image to local registry
-echo "6️⃣  Pushing image to localhost:5001 registry..."
-run_remote "cd $REMOTE_PATH && make docker-push-local"
+# Step 7: Push image to local registry
+echo "7️⃣  Pushing image to localhost:5001 registry..."
+run_remote "cd $REMOTE_PATH && docker tag yyc-languages:$LATEST_BRANCH localhost:5001/yyc-languages:$LATEST_BRANCH && docker push localhost:5001/yyc-languages:$LATEST_BRANCH && docker tag yyc-languages:latest localhost:5001/yyc-languages:latest && docker push localhost:5001/yyc-languages:latest"
 
 if [ $? -ne 0 ]; then
     echo "❌ Docker push failed"
@@ -111,8 +121,8 @@ fi
 echo "✅ Image pushed to registry"
 echo ""
 
-# Step 7: Update Portainer stack
-echo "7️⃣  Updating Portainer stack..."
+# Step 8: Update Portainer stack
+echo "8️⃣  Updating Portainer stack..."
 run_remote "source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null || true && cd $REMOTE_PATH && PORTAINER_URL=http://192.168.1.10:9000 ./scripts/portainer-update.sh $LATEST_BRANCH"
 
 if [ $? -ne 0 ]; then
@@ -123,8 +133,8 @@ else
 fi
 echo ""
 
-# Step 8: Cleanup old images
-echo "8️⃣  Cleaning up old Docker images..."
+# Step 9: Cleanup old images
+echo "9️⃣  Cleaning up old Docker images..."
 echo "   Keeping: latest 3 unique images"
 
 # Get the 3 most recent unique image IDs to keep

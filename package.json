@@ -1,6 +1,6 @@
 {
       "name": "yyclanguages.ca",
-      "version": "0.3.4",
+      "version": "0.3.5",
       "private": true,
       "type": "module",
       "dependencies": {
@@ -63,6 +63,11 @@
             "pull": "./scripts/sync-latest.sh",
             "commit": "./scripts/version-commit.sh",
             "deploy": "./scripts/remote-deploy.sh",
-            "portainer-update": "./scripts/portainer-update.sh"
+            "portainer-update": "./scripts/portainer-update.sh",
+            "docker:build": "BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo 'unknown') && docker build -t yyc-languages:$BRANCH -t yyc-languages:latest .",
+            "docker:push": "BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo 'unknown') && docker tag yyc-languages:$BRANCH localhost:5001/yyc-languages:$BRANCH && docker push localhost:5001/yyc-languages:$BRANCH && docker tag yyc-languages:latest localhost:5001/yyc-languages:latest && docker push localhost:5001/yyc-languages:latest",
+            "docker:up": "docker compose up -d",
+            "docker:down": "docker compose down",
+            "docker:logs": "docker compose logs -f yycl"
       }
 }

@@ -97,10 +97,11 @@ This command performs a complete deployment to the build server (doc0):
 1. SSH into the remote build server
 2. Fetches latest code from GitHub
 3. Checks out the latest version branch (highest version number)
-4. Builds new Docker image using Makefile
-5. Pushes image to localhost:5001 registry
-6. Updates Portainer stack with new image version via API
-7. Cleans up old Docker images (keeps 3 most recent unique images, removes images >14 days old)
+4. Installs npm dependencies and builds the React application
+5. Builds new Docker image with the built React app
+6. Pushes image to localhost:5001 registry
+7. Updates Portainer stack with new image version via API
+8. Cleans up old Docker images (keeps 3 most recent unique images, removes images >14 days old)
 
 **Result**: Portainer automatically pulls the new image and redeploys the stack.
 
@@ -136,12 +137,18 @@ npm run portainer-update v0.2.14
 
 ### Docker Development
 ```bash
-make dev-full         # Install deps and start development server
-make docker-build     # Build Docker image with version tags
-make docker-push-local # Push image to localhost:5001 registry
-make compose-up       # Start Docker container on port 8080
-make compose-down     # Stop Docker container
-make deploy           # Full workflow: build + push to registry
+npm run docker:build  # Build Docker image with version tags (auto-detects git branch)
+npm run docker:push   # Push image to localhost:5001 registry
+npm run docker:up     # Start Docker container with docker-compose
+npm run docker:down   # Stop Docker container
+npm run docker:logs   # View Docker container logs
+```
+
+**Local build workflow**:
+```bash
+npm run build         # Build React app first
+npm run docker:build  # Then build Docker image
+npm run docker:push   # Push to local registry
 ```
 
 Note: There are no test scripts or linting commands configured in this project.
@@ -262,11 +269,11 @@ The `vite.config.ts` includes extensive package version aliasing (mapping versio
 ### Docker Configuration
 
 Production deployment uses Docker with nginx:
-- **Dockerfile**: Multi-stage build with nginx Alpine
+- **Dockerfile**: Nginx Alpine base with pre-built React app
 - **nginx.conf**: Custom configuration with security headers, gzip, caching
 - **Environment variables**: Configurable via Docker environment
 - **Health checks**: Built-in container health monitoring
-- **Makefile**: Comprehensive build and deployment automation
+- **npm scripts**: Docker operations managed via package.json scripts
 
 ## Working with Components
 
