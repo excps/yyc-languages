@@ -47,13 +47,13 @@ const faqData: FAQItem[] = [
   {
     category: "Scheduling",
     question: "What is your cancellation policy?",
-    answer: `Canceling Individual Lessons
+    answer: `**Canceling Individual Lessons**
       Need to cancel a lesson? No problem! Just give us at least 24 hours notice by email or phone (or both, if possible). We'll reschedule at the next available time that works for you.
 
-      Late Cancellations & No-Shows
+      **Late Cancellations & No-Shows**
       If you cancel with less than 24 hours notice or arrive more than 20 minutes late without contacting us, the lesson deposit will be forfeited.
 
-      Canceling Your Package
+      **Canceling Your Package**
       After your first month, you can cancel your lesson package anytime with 30 days written notice via email.`,
   },
   {
@@ -144,6 +144,35 @@ const faqData: FAQItem[] = [
   },
 ];
 
+// Helper function to render FAQ answers with formatting
+function renderAnswer(answer: string) {
+  return answer.split('\n').map((line, idx) => {
+    const trimmedLine = line.trim();
+
+    // Check if line should be bold (starts and ends with **)
+    if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
+      const boldText = trimmedLine.slice(2, -2);
+      return (
+        <strong key={idx} className="block font-semibold text-gray-900 mt-4 first:mt-0">
+          {boldText}
+        </strong>
+      );
+    }
+
+    // Regular text line
+    if (trimmedLine) {
+      return (
+        <span key={idx} className="block">
+          {trimmedLine}
+        </span>
+      );
+    }
+
+    // Empty line (preserve spacing)
+    return <br key={idx} />;
+  });
+}
+
 export function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -224,9 +253,9 @@ export function FAQPage() {
                 </button>
                 {openIndex === index && (
                   <div className="px-6 pb-5">
-                    <p className="text-gray-600 leading-relaxed">
-                      {faq.answer}
-                    </p>
+                    <div className="text-gray-600 leading-relaxed">
+                      {renderAnswer(faq.answer)}
+                    </div>
                   </div>
                 )}
               </div>
