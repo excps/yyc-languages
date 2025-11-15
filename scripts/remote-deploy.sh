@@ -47,6 +47,9 @@ fi
 
 echo "Latest branch: $LATEST_BRANCH"
 
+# Clean any package-lock.json changes before checkout to prevent conflicts
+run_remote "cd $REMOTE_PATH && git checkout -- package-lock.json 2>/dev/null || true"
+
 run_remote "cd $REMOTE_PATH && git checkout $LATEST_BRANCH && git pull origin $LATEST_BRANCH"
 
 if [ $? -ne 0 ]; then
@@ -58,7 +61,25 @@ echo ""
 
 # Step 4: Build React app and Docker image
 echo "4️⃣  Installing dependencies and building React app..."
-run_remote "cd $REMOTE_PATH && rm -rf node_modules package-lock.json && npm install && npm run build"
+echo "   Using npm ci for deterministic builds..."
+
+# Try npm ci first (uses lock file, doesn't modify it, faster)
+run_remote "cd $REMOTE_PATH && npm ci"
+
+if [ $? -ne 0 ]; then
+    echo "   ⚠️  npm ci failed, falling back to clean install..."
+    run_remote "cd $REMOTE_PATH && rm -rf node_modules package-lock.json && npm install"
+
+    if [ $? -ne 0 ]; then
+        echo "❌ Dependency installation failed"
+        exit 1
+    fi
+fi
+
+echo "   Dependencies installed successfully"
+echo "   Building React app..."
+
+run_remote "cd $REMOTE_PATH && npm run build"
 
 if [ $? -ne 0 ]; then
     echo "❌ React build failed"
