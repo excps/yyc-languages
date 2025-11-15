@@ -156,11 +156,10 @@ fi
 echo "✅ Found stack ID: $STACK_ID"
 echo ""
 
-# Step 2: Get stack details
+# Step 2: Get stack details and endpoint ID
 echo "2️⃣  Fetching stack details..."
 STACK_DETAILS=$(portainer_api GET "/api/stacks/$STACK_ID")
 ENDPOINT_ID=$(echo "$STACK_DETAILS" | jq -r '.EndpointId')
-STACK_FILE=$(echo "$STACK_DETAILS" | jq -r '.StackFileContent')
 ENV_VARS=$(echo "$STACK_DETAILS" | jq -c '.Env // []')
 
 if [ -z "$ENDPOINT_ID" ] || [ "$ENDPOINT_ID" = "null" ]; then
@@ -169,6 +168,22 @@ if [ -z "$ENDPOINT_ID" ] || [ "$ENDPOINT_ID" = "null" ]; then
 fi
 
 echo "✅ Endpoint ID: $ENDPOINT_ID"
+echo ""
+
+# Step 2.5: Get stack file content (file-based stacks use separate endpoint)
+echo "2.5️⃣  Fetching stack file content..."
+STACK_FILE_RESPONSE=$(portainer_api GET "/api/stacks/$STACK_ID/file")
+STACK_FILE=$(echo "$STACK_FILE_RESPONSE" | jq -r '.StackFileContent')
+
+if [ -z "$STACK_FILE" ] || [ "$STACK_FILE" = "null" ]; then
+    echo "❌ Error: Could not retrieve stack file content"
+    echo ""
+    echo "API Response:"
+    echo "$STACK_FILE_RESPONSE" | jq .
+    exit 1
+fi
+
+echo "✅ Stack file retrieved"
 echo ""
 
 # Step 3: Update image version in stack file
