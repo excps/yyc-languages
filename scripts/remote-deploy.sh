@@ -64,27 +64,19 @@ echo "4️⃣  Installing dependencies and building React app..."
 echo "   Using npm ci for deterministic builds..."
 
 # Try npm ci first (uses lock file, doesn't modify it, faster)
-run_remote "cd $REMOTE_PATH && npm ci"
+run_remote "cd $REMOTE_PATH && npm ci && npm run build"
 
 if [ $? -ne 0 ]; then
-    echo "   ⚠️  npm ci failed, falling back to clean install..."
-    run_remote "cd $REMOTE_PATH && rm -rf node_modules package-lock.json && npm install"
+    echo "   ⚠️  npm ci or build failed, falling back to clean install..."
+    echo "   This handles npm's optional dependency bug with rollup on Linux"
+    run_remote "cd $REMOTE_PATH && rm -rf node_modules package-lock.json && npm install && npm run build"
 
     if [ $? -ne 0 ]; then
-        echo "❌ Dependency installation failed"
+        echo "❌ Build failed even after clean install"
         exit 1
     fi
 fi
 
-echo "   Dependencies installed successfully"
-echo "   Building React app..."
-
-run_remote "cd $REMOTE_PATH && npm run build"
-
-if [ $? -ne 0 ]; then
-    echo "❌ React build failed"
-    exit 1
-fi
 echo "✅ React app built successfully"
 echo ""
 
