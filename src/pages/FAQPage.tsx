@@ -47,9 +47,14 @@ const faqData: FAQItem[] = [
   {
     category: "Scheduling",
     question: "What is your cancellation policy?",
-    answer: `After the first month: cancellation policy of 30 days ahead with a written notification (Email).
-      If student needs to cancel a scheduled lesson, the student agrees to contact the tutor at least 24 hours before the scheduled lesson. The student may contact the tutor by email or by telephone, preferably both. The student and the tutor agree to reschedule the canceled lesson as soon as possible at the tutor’s availability.
-      The student forfeits the deposit paid for a scheduled lesson if the student fails to give at least 24 hours notice. The student also forfeits the deposit if he or she is later than 20 minutes to a scheduled lesson without notifying the tutor.`,
+    answer: `Canceling Individual Lessons
+      Need to cancel a lesson? No problem! Just give us at least 24 hours notice by email or phone (or both, if possible). We'll reschedule at the next available time that works for you.
+
+      Late Cancellations & No-Shows
+      If you cancel with less than 24 hours notice or arrive more than 20 minutes late without contacting us, the lesson deposit will be forfeited.
+
+      Canceling Your Package
+      After your first month, you can cancel your lesson package anytime with 30 days written notice via email.`,
   },
   {
     category: "Learning Materials",
