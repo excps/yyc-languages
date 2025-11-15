@@ -4,68 +4,76 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./general/ImageWithFallback";
 
 export function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    level: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    level: "",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Build nicely formatted plain text email body
-    const subject = encodeURIComponent('🇩🇪 German Tutoring - Free Trial Lesson Request');
+    const subject = encodeURIComponent("German Tutoring - Appointment Request");
     const body = encodeURIComponent(
-`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      `
   NEW STUDENT INQUIRY
   Free Meet And Greet Request
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 STUDENT INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Name:           ${formData.name}
 Email:          ${formData.email}
-Phone:          ${formData.phone || 'Not provided'}
+Phone:          ${formData.phone || "Not provided"}
 German Level:   ${formData.level}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 LEARNING GOALS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-${formData.message || 'Not provided'}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+${formData.message || "Not provided"}
+
+`,
     );
 
     // Open user's default email client with pre-filled information
     window.location.href = `mailto:info@yyclanguages.ca?subject=${subject}&body=${body}`;
 
     // Clear the form
-    setFormData({ name: '', email: '', phone: '', level: '', message: '' });
+    setFormData({ name: "", email: "", phone: "", level: "", message: "" });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
-    <div id="contact" className="py-20 bg-white">
+    <div
+      id="contact"
+      className="py-16 relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-gray-50"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl text-gray-900 mb-4">
             Ready to Start Learning?
           </h2>
           <p className="text-xl text-gray-600">
-            Schedule your free trial lesson today and take the first step toward German fluency.
+            Schedule your free Meet and Greet appointment today and take the
+            first step toward German fluency.
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12">
@@ -83,7 +91,7 @@ ${formData.message || 'Not provided'}
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="John Doe"
+                    placeholder="Your Name"
                   />
                 </div>
                 <div>
@@ -97,7 +105,7 @@ ${formData.message || 'Not provided'}
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="john@example.com"
+                    placeholder="email@example.com"
                   />
                 </div>
                 <div>
@@ -110,7 +118,7 @@ ${formData.message || 'Not provided'}
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+49 123 456 7890"
+                    placeholder="+1 ... "
                   />
                 </div>
                 <div>
@@ -126,10 +134,14 @@ ${formData.message || 'Not provided'}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">Select your level</option>
-                    <option value="complete-beginner">Complete Beginner (A1)</option>
+                    <option value="complete-beginner">
+                      Complete Beginner (A1)
+                    </option>
                     <option value="elementary">Elementary (A2)</option>
                     <option value="intermediate">Intermediate (B1)</option>
-                    <option value="upper-intermediate">Upper Intermediate (B2)</option>
+                    <option value="upper-intermediate">
+                      Upper Intermediate (B2)
+                    </option>
                     <option value="advanced">Advanced (C1)</option>
                     <option value="proficient">Proficient (C2)</option>
                   </select>
@@ -147,20 +159,54 @@ ${formData.message || 'Not provided'}
                     placeholder="I want to learn German because..."
                   />
                 </div>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                >
                   Schedule Your Free Meet And Greet
                 </Button>
               </form>
             </Card>
           </div>
           <div className="space-y-8">
-            <div className="rounded-2xl overflow-hidden shadow-lg">
-              <ImageWithFallback
-                src="/images/german-flag.png"
-                alt="German flag"
-                className="w-full h-64 object-contain"
-              />
-            </div>
+            <Card className="p-8 bg-gradient-to-br from-blue-50 to-white">
+              <h3 className="text-2xl text-gray-900 mb-6">Why Choose YYC-Languages?</h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-semibold">
+                    1
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-1">Personalized Learning</h4>
+                    <p className="text-gray-600">
+                      One-on-one lessons tailored to your goals, learning style, and pace
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-semibold">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-1">Native German Speaker</h4>
+                    <p className="text-gray-600">
+                      Learn from Andrea, a native speaker with 25+ years of teaching experience
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-semibold">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-1">Flexible & Convenient</h4>
+                    <p className="text-gray-600">
+                      Schedule lessons that fit your lifestyle, online or in-person
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Card>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -168,11 +214,13 @@ ${formData.message || 'Not provided'}
                 </div>
                 <div>
                   <h3 className="text-lg text-gray-900 mb-1">Email Us</h3>
-                  <p className="text-gray-600">andrea@yyclanguages.ca</p>
-                  <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
+                  <p className="text-gray-600">info@yyclanguages.ca</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    We'll respond within 24 hours
+                  </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
+              {/*<div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Phone className="w-6 h-6 text-blue-600" />
                 </div>
@@ -190,7 +238,7 @@ ${formData.message || 'Not provided'}
                   <h3 className="text-lg text-gray-900 mb-1">Visit Us</h3>
                   <p className="text-gray-600">Millrise SW, Calgary</p>
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>

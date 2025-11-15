@@ -1,0 +1,306 @@
+#!/bin/zsh
+
+# Portainer Stack Update Script
+# Updates a Portainer stack with a new image version from localhost:5001 registry
+
+set -e
+
+# Configuration
+PORTAINER_URL="${PORTAINER_URL:-http://192.168.1.10:9000}"
+PORTAINER_TOKEN="${PORTAINER_TOKEN:-}"
+STACK_NAME="${STACK_NAME:-yyc-languages}"
+IMAGE_NAME="yyc-languages"
+REGISTRY="localhost:5001"
+
+# Check if version parameter is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <version>"
+    echo "Example: $0 v0.2.14"
+    exit 1
+fi
+
+NEW_VERSION="$1"
+NEW_IMAGE="${REGISTRY}/${IMAGE_NAME}:${NEW_VERSION}"
+
+echo "🔄 Updating Portainer stack: $STACK_NAME"
+echo "   New image: $NEW_IMAGE"
+echo ""
+
+# Check if jq is installed
+if ! command -v jq &> /dev/null; then
+    echo "❌ Error: jq is not installed"
+    echo ""
+    echo "jq is required to parse JSON responses from Portainer API"
+    echo ""
+    echo "To install jq:"
+    echo "  Ubuntu/Debian: sudo apt-get install -y jq"
+    echo "  CentOS/RHEL:   sudo yum install -y jq"
+    echo "  macOS:         brew install jq"
+    echo ""
+    exit 1
+fi
+
+# Check if PORTAINER_TOKEN is set
+if [ -z "$PORTAINER_TOKEN" ]; then
+    echo "❌ Error: PORTAINER_TOKEN environment variable is not set"
+    echo ""
+    echo "To create an API token:"
+    echo "1. Login to Portainer at http://192.168.1.10:9000"
+    echo "2. Go to User menu > My account"
+    echo "3. Navigate to 'Access tokens' section"
+    echo "4. Click 'Add access token'"
+    echo "5. Export the token: export PORTAINER_TOKEN='your-token-here'"
+    echo "6. Add to ~/.bashrc or ~/.zshrc to persist"
+    exit 1
+fi
+
+# Function to call Portainer API
+portainer_api() {
+    local method="$1"
+    local endpoint="$2"
+    local data="$3"
+
+    if [ -n "$data" ]; then
+        curl -s -X "$method" \
+            -H "X-API-Key: $PORTAINER_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$data" \
+            "${PORTAINER_URL}${endpoint}"
+    else
+        curl -s -X "$method" \
+            -H "X-API-Key: $PORTAINER_TOKEN" \
+            "${PORTAINER_URL}${endpoint}"
+    fi
+}
+
+# Step 0: Check Portainer connectivity
+echo "0️⃣  Checking Portainer connectivity..."
+echo "   URL: $PORTAINER_URL"
+
+# Try to connect to Portainer (with timeout)
+HEALTH_CHECK=$(curl -s --connect-timeout 5 --max-time 10 -o /dev/null -w "%{http_code}" "${PORTAINER_URL}/api/system/status" 2>/dev/null)
+
+if [ "$HEALTH_CHECK" = "000" ]; then
+    echo "❌ Error: Cannot reach Portainer at $PORTAINER_URL"
+    echo ""
+    echo "Possible issues:"
+    echo "  - Portainer is not running"
+    echo "  - URL is incorrect"
+    echo "  - Network/firewall blocking access"
+    echo ""
+    echo "Try manually:"
+    echo "  curl $PORTAINER_URL/api/system/status"
+    exit 1
+elif [ "$HEALTH_CHECK" = "401" ] || [ "$HEALTH_CHECK" = "403" ]; then
+    echo "✅ Portainer is reachable (HTTP $HEALTH_CHECK - auth required, which is expected)"
+elif [ "$HEALTH_CHECK" = "200" ]; then
+    echo "✅ Portainer is reachable (HTTP $HEALTH_CHECK)"
+else
+    echo "⚠️  Portainer responded with HTTP $HEALTH_CHECK"
+fi
+echo ""
+
+# Step 1: Get stack ID by name
+echo "1️⃣  Finding stack '$STACK_NAME'..."
+STACKS_RESPONSE=$(portainer_api GET "/api/stacks")
+
+# Check if response is valid JSON
+if ! echo "$STACKS_RESPONSE" | jq empty 2>/dev/null; then
+    echo "❌ Error: Invalid response from Portainer API"
+    echo ""
+    echo "Response received:"
+    echo "$STACKS_RESPONSE"
+    echo ""
+    exit 1
+fi
+
+# Check if response is an error object
+if echo "$STACKS_RESPONSE" | jq -e 'has("message")' > /dev/null 2>&1; then
+    ERROR_MSG=$(echo "$STACKS_RESPONSE" | jq -r '.message')
+    echo "❌ Error from Portainer API: $ERROR_MSG"
+    echo ""
+    echo "Response details:"
+    echo "$STACKS_RESPONSE" | jq .
+    echo ""
+    echo "Possible issues:"
+    echo "  - PORTAINER_TOKEN is invalid or expired"
+    echo "  - PORTAINER_URL is incorrect (currently: $PORTAINER_URL)"
+    echo "  - Insufficient permissions for the API token"
+    exit 1
+fi
+
+# Check if response is an array
+if ! echo "$STACKS_RESPONSE" | jq -e 'type == "array"' > /dev/null 2>&1; then
+    echo "❌ Error: Unexpected response format from Portainer API"
+    echo ""
+    echo "Expected an array of stacks, got:"
+    echo "$STACKS_RESPONSE" | jq .
+    exit 1
+fi
+
+STACK_ID=$(echo "$STACKS_RESPONSE" | jq -r ".[] | select(.Name==\"$STACK_NAME\") | .Id")
+
+if [ -z "$STACK_ID" ] || [ "$STACK_ID" = "null" ]; then
+    echo "❌ Error: Stack '$STACK_NAME' not found"
+    echo ""
+    STACK_COUNT=$(echo "$STACKS_RESPONSE" | jq 'length')
+    if [ "$STACK_COUNT" -eq 0 ]; then
+        echo "No stacks found in Portainer"
+    else
+        echo "Available stacks:"
+        echo "$STACKS_RESPONSE" | jq -r '.[].Name'
+    fi
+    exit 1
+fi
+
+echo "✅ Found stack ID: $STACK_ID"
+echo ""
+
+# Step 2: Get stack details and endpoint ID
+echo "2️⃣  Fetching stack details..."
+STACK_DETAILS=$(portainer_api GET "/api/stacks/$STACK_ID")
+ENDPOINT_ID=$(echo "$STACK_DETAILS" | jq -r '.EndpointId')
+ENV_VARS=$(echo "$STACK_DETAILS" | jq -c '.Env // []')
+
+if [ -z "$ENDPOINT_ID" ] || [ "$ENDPOINT_ID" = "null" ]; then
+    echo "❌ Error: Could not retrieve endpoint ID"
+    exit 1
+fi
+
+echo "✅ Endpoint ID: $ENDPOINT_ID"
+echo ""
+
+# Step 2.5: Get stack file content (file-based stacks use separate endpoint)
+echo "2.5️⃣  Fetching stack file content..."
+
+# Use temp file to avoid shell command substitution issues with control characters
+TEMP_FILE=$(mktemp)
+trap "rm -f $TEMP_FILE" EXIT
+
+portainer_api GET "/api/stacks/$STACK_ID/file" > "$TEMP_FILE"
+
+# Extract and validate stack file content
+# Use jq -r to get raw unescaped content (converts \n to actual newlines)
+if ! STACK_FILE=$(jq -r '.StackFileContent' "$TEMP_FILE" 2>/dev/null); then
+    echo "❌ Error: Could not parse stack file content"
+    echo ""
+    echo "API Response (first 500 chars):"
+    head -c 500 "$TEMP_FILE"
+    exit 1
+fi
+
+if [ -z "$STACK_FILE" ] || [ "$STACK_FILE" = "null" ]; then
+    echo "❌ Error: Could not retrieve stack file content"
+    echo ""
+    echo "API Response:"
+    cat "$TEMP_FILE"
+    exit 1
+fi
+
+echo "✅ Stack file retrieved"
+echo ""
+
+# Step 3: Update image version in stack file
+echo "3️⃣  Updating image version..."
+echo "   Current stack file preview:"
+echo "$STACK_FILE" | grep -A 2 -B 2 "image:" || {
+    echo "   (no 'image:' line found - showing full stack file)"
+    echo ""
+    echo "━━━━━━━━━━ FULL STACK FILE ━━━━━━━━━━"
+    echo "$STACK_FILE"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
+echo ""
+
+# Try multiple patterns to find and replace the image line
+UPDATED_STACK_FILE=""
+
+# Pattern 1: With localhost:5001 registry and version
+UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${REGISTRY}/${IMAGE_NAME}:v[0-9\.]*|image: ${NEW_IMAGE}|g")
+
+if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
+    # Pattern 2: Without registry prefix
+    UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${IMAGE_NAME}:v[0-9\.]*|image: ${NEW_IMAGE}|g")
+fi
+
+if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
+    # Pattern 3: Any version tag format (not just v#.#.#)
+    UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${REGISTRY}/${IMAGE_NAME}:[^[:space:]]*|image: ${NEW_IMAGE}|g")
+fi
+
+if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
+    # Pattern 4: Just image name with any tag
+    UPDATED_STACK_FILE=$(echo "$STACK_FILE" | sed "s|image:[[:space:]]*${IMAGE_NAME}:[^[:space:]]*|image: ${NEW_IMAGE}|g")
+fi
+
+# Check if any replacement was successful
+if [ "$STACK_FILE" = "$UPDATED_STACK_FILE" ]; then
+    echo "❌ Error: Could not find image line to update"
+    echo ""
+    echo "Tried patterns:"
+    echo "  1. image: ${REGISTRY}/${IMAGE_NAME}:v*"
+    echo "  2. image: ${IMAGE_NAME}:v*"
+    echo "  3. image: ${REGISTRY}/${IMAGE_NAME}:*"
+    echo "  4. image: ${IMAGE_NAME}:*"
+    echo ""
+    echo "Full stack file content:"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "$STACK_FILE"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    exit 1
+fi
+
+echo "✅ Updated to: $NEW_IMAGE"
+echo ""
+
+# Step 4: Prepare JSON payload
+echo "4️⃣  Preparing update payload..."
+
+# Escape the stack file for JSON
+ESCAPED_STACK_FILE=$(echo "$UPDATED_STACK_FILE" | jq -Rs .)
+
+# Create JSON payload
+JSON_PAYLOAD=$(jq -n \
+    --argjson stackFile "$ESCAPED_STACK_FILE" \
+    --argjson env "$ENV_VARS" \
+    '{
+        StackFileContent: $stackFile,
+        Env: $env,
+        Prune: false,
+        PullImage: true
+    }')
+
+echo "✅ Payload prepared"
+echo "   - PullImage: true (will pull from registry)"
+echo "   - Prune: false (keeps existing resources)"
+echo ""
+
+# Step 5: Update the stack
+echo "5️⃣  Updating stack via API..."
+RESPONSE=$(portainer_api PUT "/api/stacks/$STACK_ID?endpointId=$ENDPOINT_ID" "$JSON_PAYLOAD")
+
+# Check if response contains error
+if echo "$RESPONSE" | jq -e '.message' > /dev/null 2>&1; then
+    ERROR_MSG=$(echo "$RESPONSE" | jq -r '.message')
+    echo "❌ Error updating stack: $ERROR_MSG"
+    exit 1
+fi
+
+echo "✅ Stack updated successfully"
+echo ""
+
+# Step 6: Trigger stack redeploy with image pull
+echo "6️⃣  Stack will pull image and redeploy..."
+echo "   Portainer is now:"
+echo "   - Pulling image: $NEW_IMAGE"
+echo "   - Redeploying containers"
+echo ""
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "🎉 Portainer stack update complete!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "Stack: $STACK_NAME"
+echo "Image: $NEW_IMAGE"
+echo ""
+echo "Check status at: ${PORTAINER_URL}/#!/stacks"

@@ -1,0 +1,38 @@
+services:
+  yycl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yyc-lang
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      # Customizable environment variables
+      - APP_TITLE=YYC Languages
+      - APP_DESCRIPTION=German Language Tutoring Service
+      - API_URL=/api
+      - CONTACT_EMAIL=info@yyclanguages.ca
+    # Resource limits for production
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 256M
+    #       cpus: '0.5'
+    #     reservations:
+    #       memory: 128M
+    #       cpus: '0.25'
+    # Health check with curl (more reliable than wget)
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - web-network
+
+networks:
+  web-network:
+    external: true 
