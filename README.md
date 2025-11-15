@@ -52,6 +52,12 @@ npm run deploy       # Deploy to remote server (doc0)
 npm run portainer-update <version>
 ```
 
+## Documentation
+
+- **[CLAUDE.md](CLAUDE.md)** - Comprehensive development guide
+- **[docs/](docs/)** - Additional documentation
+  - [Sync Workflow](docs/sync-workflow.md) - `npm run pull` workflow diagram
+
 ## Tech Stack
 
 - **Framework**: React 18.3.1 with TypeScript
@@ -71,5 +77,3 @@ src/
 │   └── general/    # Shared components
 └── styles/         # Tailwind CSS configuration
 ```
-
-For detailed documentation, see [CLAUDE.md](CLAUDE.md).

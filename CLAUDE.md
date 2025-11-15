@@ -55,16 +55,36 @@ If you need to commit without incrementing the version, use standard git command
 npm run pull
 ```
 
-This command automatically:
-1. Fetches all changes from remote repository
-2. Identifies the latest version branch (highest version number)
-3. Merges the latest branch into your current branch (with confirmation)
-4. If you're already on the latest branch, pulls the latest changes
+This smart sync tool intelligently handles different scenarios:
 
-**Example use cases**:
-- You're on `v0.2.1` and want to merge changes from `v0.2.3`
-- You want to update your current branch with the latest remote changes
-- You need to sync your local repository with the remote
+**Scenario 1: On latest branch, no changes**
+- Simply pulls latest updates from remote
+
+**Scenario 2: On latest branch, with uncommitted changes**
+- Stashes changes → pulls updates → restores stashed changes
+- Handles conflicts gracefully with clear recovery instructions
+
+**Scenario 3: On older branch, no changes**
+- Automatically switches to latest version branch
+
+**Scenario 4: On older branch, with uncommitted changes**
+- Stashes changes → switches to latest → restores stashed changes
+
+**Scenario 5: On older branch, with committed changes**
+- Interactive menu offers:
+  1. Cherry-pick commits to latest (recommended)
+  2. Create new feature branch from latest with your commits
+  3. Stay on current branch (no sync)
+  4. Discard commits and switch to latest (destructive)
+
+**Benefits**:
+- Never merges latest into older version branches (prevents version mixing)
+- Preserves your work automatically via stashing
+- Handles uncommitted and committed changes intelligently
+- Clear error messages and recovery instructions
+- Prevents data loss with safety prompts
+
+📖 **For detailed workflow diagram and scenarios, see [docs/sync-workflow.md](docs/sync-workflow.md)**
 
 ### Deployment
 
