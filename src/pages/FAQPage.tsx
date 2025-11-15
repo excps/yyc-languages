@@ -153,7 +153,7 @@ function renderAnswer(answer: string) {
     if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
       const boldText = trimmedLine.slice(2, -2);
       return (
-        <strong key={idx} className="block font-semibold text-gray-900 mt-4 first:mt-0">
+        <strong key={idx} className="block font-semibold text-gray-900 mt-2 first:mt-0">
           {boldText}
         </strong>
       );

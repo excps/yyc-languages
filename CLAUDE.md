@@ -317,3 +317,4 @@ Use `ImageWithFallback` component from `src/components/general/` for external im
 - **Git-based versioning**: Docker images tagged with branch names automatically
 - When asked to commit something always use the `npm run commit` action from @package.json
 - Always check @package.json file first if you can find an action doing the task (example `npm run commit " your commit message"` )
+- Do not run the `npm run build` and `npm run commit` actions automatically. You might ask for permission to do so. The user needs to confirm their intention before proceeding.
