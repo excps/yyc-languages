@@ -58,7 +58,7 @@ echo ""
 
 # Step 4: Build React app and Docker image
 echo "4️⃣  Installing dependencies and building React app..."
-run_remote "cd $REMOTE_PATH && npm install && npm run build"
+run_remote "cd $REMOTE_PATH && rm -rf node_modules package-lock.json && npm install && npm run build"
 
 if [ $? -ne 0 ]; then
     echo "❌ React build failed"
