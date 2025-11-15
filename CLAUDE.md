@@ -315,4 +315,5 @@ Use `ImageWithFallback` component from `src/components/general/` for external im
 - **Mobile-first responsive**: Uses Tailwind's responsive utilities (`sm:`, `md:`, `lg:`)
 - **Environment variables**: Support for runtime configuration via Docker
 - **Git-based versioning**: Docker images tagged with branch names automatically
-- always check @package.json file first if you can findan action already setup doing the task
+- When asked to commit something always use the `npm run commit` action from @package.json
+- Always check @package.json file first if you can find an action doing the task (example `npm run commit " your commit message"` )
