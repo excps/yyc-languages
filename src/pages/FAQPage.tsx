@@ -49,12 +49,11 @@ const faqData: FAQItem[] = [
     question: "What is your cancellation policy?",
     answer: `**Canceling Individual Lessons**
       Need to cancel a lesson? No problem! Just give us at least 24 hours notice by email or phone (or both, if possible). We'll reschedule at the next available time that works for you.
-
       **Late Cancellations & No-Shows**
       If you cancel with less than 24 hours notice or arrive more than 20 minutes late without contacting us, the lesson deposit will be forfeited.
-
       **Canceling Your Package**
-      After your first month, you can cancel your lesson package anytime with 30 days written notice via email.`,
+      During your first month, you can cancel at any time with a full refund of lessons not taken.
+      After your first month, you can cancel your lesson package anytime with a 30 day written notice via email.`,
   },
   {
     category: "Learning Materials",
@@ -153,7 +152,7 @@ function renderAnswer(answer: string) {
     if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
       const boldText = trimmedLine.slice(2, -2);
       return (
-        <strong key={idx} className="block font-semibold text-gray-900 mt-2 first:mt-0">
+        <strong key={idx} className="block font-semibold text-gray-900 mt-4 first:mt-0">
           {boldText}
         </strong>
       );
