@@ -6,11 +6,11 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 const blogPosts = [
   {
     id: "common-mistakes-german-learners",
-    title: "7 Common Mistakes German Learners Make (And How to Avoid Them)",
-    excerpt: "Learning German comes with its challenges, and many students fall into the same traps. Understanding these common mistakes can help you avoid them and accelerate your progress. Here are the seven most frequent errors German learners make and practical strategies to overcome them.",
+    title: "The Little Steps Method: How Jess Learned German Without Feeling Overwhelmed",
+    excerpt: "When Jess moved to Calgary, she wanted to learn German but felt completely unsure about where to begin. Discover how the Little Steps Method transformed her learning journey with one simple rule: Small steps every day. BIG progress.",
     date: "2025-11-29",
-    readTime: "6 min read",
-    category: "Learning Tips"
+    readTime: "4 min read",
+    category: "Success Stories"
   },
   {
     id: "essential-tips-learning-german",
