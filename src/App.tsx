@@ -4,6 +4,9 @@ import { Footer } from "./components/Footer";
 import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { MeetAndreaPage } from "./pages/MeetAndreaPage";
+import { BlogPage } from "./pages/blog/BlogPage";
+import { CommonMistakes } from "./pages/blog/CommonMistakes";
+import { EssentialTips } from "./pages/blog/EssentialTips";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { TermsOfServicePage } from "./pages/TermsOfServicePage";
 import { FAQPage } from "./pages/FAQPage";
@@ -18,6 +21,9 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/meet-andrea" element={<MeetAndreaPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/common-mistakes-german-learners" element={<CommonMistakes />} />
+          <Route path="/blog/essential-tips-learning-german" element={<EssentialTips />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<TermsOfServicePage />} />
           <Route path="/faq" element={<FAQPage />} />

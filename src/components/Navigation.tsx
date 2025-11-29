@@ -63,6 +63,12 @@ export function Navigation() {
                 >
                   Testimonials
                 </button>
+                <Link
+                  to="/blog"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Blog
+                </Link>
                 <button
                   onClick={() => scrollToSection("contact")}
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -83,6 +89,12 @@ export function Navigation() {
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Testimonials
+                </Link>
+                <Link
+                  to="/blog"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Blog
                 </Link>
                 <Link
                   to="/#contact"
@@ -149,6 +161,13 @@ export function Navigation() {
                 >
                   Testimonials
                 </button>
+                <Link
+                  to="/blog"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Blog
+                </Link>
                 <button
                   onClick={() => scrollToSection("contact")}
                   className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
@@ -171,6 +190,13 @@ export function Navigation() {
                   className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
                 >
                   Testimonials
+                </Link>
+                <Link
+                  to="/blog"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Blog
                 </Link>
                 <Link
                   to="/#contact"
