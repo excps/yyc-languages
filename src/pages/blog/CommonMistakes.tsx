@@ -9,39 +9,46 @@ const post = {
   date: "2025-11-29",
   readTime: "4 min read",
   category: "Success Stories",
-    content: `
-      <p class="text-lg text-gray-600 mb-6">When Jess moved to Calgary, she wanted to learn German, but she felt completely unsure about where to begin. Then she discovered my service.</p>
+};
 
-      <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">The Turning Point: A Simple Rule</h2>
-      <p class="text-gray-700 mb-4">During our complimentary "Meet & Greet" lesson, I shared one simple rule with Jess:</p>
-      <p class="text-gray-700 mb-4 text-xl font-semibold text-blue-600">"Small steps every day. BIG progress."</p>
+function BlogContent() {
+  return (
+    <>
+      <p className="text-lg text-gray-600 mb-6">
+        When Jess moved to Calgary, she wanted to learn German, but she felt completely unsure about where to begin. Then she discovered my service.
+      </p>
 
-      <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">How the Little Steps Method Works</h2>
-      <p class="text-gray-700 mb-4">In addition to our weekly 90-minute lesson, Jess now follows a simple daily routine:</p>
-      <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+      <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">The Turning Point: A Simple Rule</h2>
+      <p className="text-gray-700 mb-4">During our complimentary "Meet & Greet" lesson, I shared one simple rule with Jess:</p>
+      <p className="text-gray-700 mb-4 text-xl font-semibold text-blue-600">"Small steps every day. BIG progress."</p>
+
+      <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">How the Little Steps Method Works</h2>
+      <p className="text-gray-700 mb-4">In addition to our weekly 90-minute lesson, Jess now follows a simple daily routine:</p>
+      <ul className="list-disc list-inside text-gray-700 mb-4 space-y-2">
         <li>Learns just a few words each day</li>
         <li>Watches short videos (with subtitles)</li>
         <li>Reads tiny texts</li>
         <li>Reviews once a week</li>
       </ul>
-      <p class="text-gray-700 mb-4">The tasks are so easy that she never feels overwhelmed. That's the key—when learning feels manageable, it becomes sustainable.</p>
+      <p className="text-gray-700 mb-4">The tasks are so easy that she never feels overwhelmed. That's the key—when learning feels manageable, it becomes sustainable.</p>
 
-      <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">The Results Speak for Themselves</h2>
-      <p class="text-gray-700 mb-4">After a few weeks, Jess realized she could understand basic sentences. After a month, she could already talk a little.</p>
-      <p class="text-gray-700 mb-4">The secret is simple: <strong>Consistency beats intensity.</strong> Short and regular wins every time.</p>
+      <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">The Results Speak for Themselves</h2>
+      <p className="text-gray-700 mb-4">After a few weeks, Jess realized she could understand basic sentences. After a month, she could already talk a little.</p>
+      <p className="text-gray-700 mb-4">The secret is simple: <strong>Consistency beats intensity.</strong> Short and regular wins every time.</p>
 
-      <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Why the Little Steps Method Works</h2>
-      <p class="text-gray-700 mb-4">My secret approach to start with the little-steps method makes learning suddenly feel possible—almost effortless. Instead of cramming hours of study that lead to burnout, small daily actions build momentum and confidence.</p>
-      <p class="text-gray-700 mb-4">We shared the start of our journey with a cup of hot chocolate 😊. That relaxed, friendly atmosphere continues in every lesson, making language learning not just effective, but enjoyable.</p>
+      <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Why the Little Steps Method Works</h2>
+      <p className="text-gray-700 mb-4">My secret approach to start with the little-steps method makes learning suddenly feel possible—almost effortless. Instead of cramming hours of study that lead to burnout, small daily actions build momentum and confidence.</p>
+      <p className="text-gray-700 mb-4">We shared the start of our journey with a cup of hot chocolate 😊. That relaxed, friendly atmosphere continues in every lesson, making language learning not just effective, but enjoyable.</p>
 
-      <div class="bg-blue-50 border-l-4 border-blue-500 p-6 mt-8 mb-6">
-        <p class="text-gray-800 font-medium mb-2">Ready to start your own Little Steps journey?</p>
-        <p class="text-gray-700">Book your complimentary "Meet & Greet" lesson today and discover how small steps can lead to big progress in your German learning. Let's share a cup of hot chocolate and plan your personalized learning path!</p>
+      <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mt-8 mb-6">
+        <p className="text-gray-800 font-medium mb-2">Ready to start your own Little Steps journey?</p>
+        <p className="text-gray-700">Book your complimentary "Meet & Greet" lesson today and discover how small steps can lead to big progress in your German learning. Let's share a cup of hot chocolate and plan your personalized learning path!</p>
       </div>
-    `
-};
+    </>
+  );
+}
 
-export function CommonMistakes() {
+export default function CommonMistakes() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -80,10 +87,9 @@ export function CommonMistakes() {
             {post.title}
           </h1>
 
-          <div
-            className="prose prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <div className="prose prose-lg max-w-none">
+            <BlogContent />
+          </div>
         </article>
 
         <div className="mt-12 text-center">
