@@ -26,7 +26,7 @@ export function Testimonials() {
   return (
     <div
       id="testimonials"
-      className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-gray-50"
+      className="py-8 relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-gray-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-12">
         <div className="text-center max-w-3xl mx-auto mb-16">
