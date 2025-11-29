@@ -1,65 +1,12 @@
-import { useState } from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { Mail, Phone, MapPin } from "lucide-react";
-import { ImageWithFallback } from "./general/ImageWithFallback";
+import { Mail } from "lucide-react";
+import { useForm, ValidationError } from "@formspree/react";
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    level: "",
-    message: "",
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Build nicely formatted plain text email body
-    const subject = encodeURIComponent("German Tutoring - Appointment Request");
-    const body = encodeURIComponent(
-      `
-  NEW STUDENT INQUIRY
-  Free Meet And Greet Request
-
-
-STUDENT INFORMATION
-
-
-Name:           ${formData.name}
-Email:          ${formData.email}
-Phone:          ${formData.phone || "Not provided"}
-German Level:   ${formData.level}
-
-
-LEARNING GOALS
-
-
-${formData.message || "Not provided"}
-
-`,
-    );
-
-    // Open user's default email client with pre-filled information
-    window.location.href = `mailto:info@yyclanguages.ca?subject=${subject}&body=${body}`;
-
-    // Clear the form
-    setFormData({ name: "", email: "", phone: "", level: "", message: "" });
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [state, handleSubmit] = useForm("mnnwjaje");
 
   return (
     <div
@@ -79,6 +26,14 @@ ${formData.message || "Not provided"}
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
             <Card className="p-8">
+              {state.succeeded && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+                  <p className="text-green-800 font-medium">
+                    Thank you for your interest! We've received your request and will get back to you within 24 hours.
+                  </p>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-gray-700 mb-2">
@@ -89,9 +44,13 @@ ${formData.message || "Not provided"}
                     name="name"
                     type="text"
                     required
-                    value={formData.name}
-                    onChange={handleChange}
                     placeholder="Your Name"
+                  />
+                  <ValidationError
+                    prefix="Name"
+                    field="name"
+                    errors={state.errors}
+                    className="text-red-600 text-sm mt-1"
                   />
                 </div>
                 <div>
@@ -103,9 +62,13 @@ ${formData.message || "Not provided"}
                     name="email"
                     type="email"
                     required
-                    value={formData.email}
-                    onChange={handleChange}
                     placeholder="email@example.com"
+                  />
+                  <ValidationError
+                    prefix="Email"
+                    field="email"
+                    errors={state.errors}
+                    className="text-red-600 text-sm mt-1"
                   />
                 </div>
                 <div>
@@ -116,9 +79,13 @@ ${formData.message || "Not provided"}
                     id="phone"
                     name="phone"
                     type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
                     placeholder="+1 ... "
+                  />
+                  <ValidationError
+                    prefix="Phone"
+                    field="phone"
+                    errors={state.errors}
+                    className="text-red-600 text-sm mt-1"
                   />
                 </div>
                 <div>
@@ -129,8 +96,6 @@ ${formData.message || "Not provided"}
                     id="level"
                     name="level"
                     required
-                    value={formData.level}
-                    onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">Select your level</option>
@@ -145,6 +110,12 @@ ${formData.message || "Not provided"}
                     <option value="advanced">Advanced (C1)</option>
                     <option value="proficient">Proficient (C2)</option>
                   </select>
+                  <ValidationError
+                    prefix="Level"
+                    field="level"
+                    errors={state.errors}
+                    className="text-red-600 text-sm mt-1"
+                  />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-gray-700 mb-2">
@@ -154,16 +125,21 @@ ${formData.message || "Not provided"}
                     id="message"
                     name="message"
                     rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
                     placeholder="I want to learn German because..."
+                  />
+                  <ValidationError
+                    prefix="Message"
+                    field="message"
+                    errors={state.errors}
+                    className="text-red-600 text-sm mt-1"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  disabled={state.submitting}
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Schedule Your Free Meet And Greet
+                  {state.submitting ? "Sending..." : "Schedule Your Free Meet And Greet"}
                 </Button>
               </form>
             </Card>

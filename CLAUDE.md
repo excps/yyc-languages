@@ -55,16 +55,36 @@ If you need to commit without incrementing the version, use standard git command
 npm run pull
 ```
 
-This command automatically:
-1. Fetches all changes from remote repository
-2. Identifies the latest version branch (highest version number)
-3. Merges the latest branch into your current branch (with confirmation)
-4. If you're already on the latest branch, pulls the latest changes
+This smart sync tool intelligently handles different scenarios:
 
-**Example use cases**:
-- You're on `v0.2.1` and want to merge changes from `v0.2.3`
-- You want to update your current branch with the latest remote changes
-- You need to sync your local repository with the remote
+**Scenario 1: On latest branch, no changes**
+- Simply pulls latest updates from remote
+
+**Scenario 2: On latest branch, with uncommitted changes**
+- Stashes changes → pulls updates → restores stashed changes
+- Handles conflicts gracefully with clear recovery instructions
+
+**Scenario 3: On older branch, no changes**
+- Automatically switches to latest version branch
+
+**Scenario 4: On older branch, with uncommitted changes**
+- Stashes changes → switches to latest → restores stashed changes
+
+**Scenario 5: On older branch, with committed changes**
+- Interactive menu offers:
+  1. Cherry-pick commits to latest (recommended)
+  2. Create new feature branch from latest with your commits
+  3. Stay on current branch (no sync)
+  4. Discard commits and switch to latest (destructive)
+
+**Benefits**:
+- Never merges latest into older version branches (prevents version mixing)
+- Preserves your work automatically via stashing
+- Handles uncommitted and committed changes intelligently
+- Clear error messages and recovery instructions
+- Prevents data loss with safety prompts
+
+📖 **For detailed workflow diagram and scenarios, see [docs/sync-workflow.md](docs/sync-workflow.md)**
 
 ### Deployment
 
@@ -77,10 +97,11 @@ This command performs a complete deployment to the build server (doc0):
 1. SSH into the remote build server
 2. Fetches latest code from GitHub
 3. Checks out the latest version branch (highest version number)
-4. Builds new Docker image using Makefile
-5. Pushes image to localhost:5001 registry
-6. Updates Portainer stack with new image version via API
-7. Cleans up old Docker images (keeps 3 most recent unique images, removes images >14 days old)
+4. Installs npm dependencies and builds the React application
+5. Builds new Docker image with the built React app
+6. Pushes image to localhost:5001 registry
+7. Updates Portainer stack with new image version via API
+8. Cleans up old Docker images (keeps 3 most recent unique images, removes images >14 days old)
 
 **Result**: Portainer automatically pulls the new image and redeploys the stack.
 
@@ -114,20 +135,20 @@ npm run portainer-update v0.2.14
 - Portainer: http://192.168.1.10:9000
 - Stack name: yyc-languages
 
-**File Sync (Development)**:
-```bash
-npm run sync         # Rsync files to remote (excludes node_modules)
-make sync            # Alternative make command
-```
-
 ### Docker Development
 ```bash
-make dev-full         # Install deps and start development server
-make docker-build     # Build Docker image with version tags
-make docker-push-local # Push image to localhost:5001 registry
-make compose-up       # Start Docker container on port 8080
-make compose-down     # Stop Docker container
-make deploy           # Full workflow: build + push to registry
+npm run docker:build  # Build Docker image with version tags (auto-detects git branch)
+npm run docker:push   # Push image to localhost:5001 registry
+npm run docker:up     # Start Docker container with docker-compose
+npm run docker:down   # Stop Docker container
+npm run docker:logs   # View Docker container logs
+```
+
+**Local build workflow**:
+```bash
+npm run build         # Build React app first
+npm run docker:build  # Then build Docker image
+npm run docker:push   # Push to local registry
 ```
 
 Note: There are no test scripts or linting commands configured in this project.
@@ -248,11 +269,11 @@ The `vite.config.ts` includes extensive package version aliasing (mapping versio
 ### Docker Configuration
 
 Production deployment uses Docker with nginx:
-- **Dockerfile**: Multi-stage build with nginx Alpine
+- **Dockerfile**: Nginx Alpine base with pre-built React app
 - **nginx.conf**: Custom configuration with security headers, gzip, caching
 - **Environment variables**: Configurable via Docker environment
 - **Health checks**: Built-in container health monitoring
-- **Makefile**: Comprehensive build and deployment automation
+- **npm scripts**: Docker operations managed via package.json scripts
 
 ## Working with Components
 
@@ -293,6 +314,7 @@ Use `ImageWithFallback` component from `src/components/general/` for external im
 - **Docker ready**: Full containerization support for production deployment
 - **Mobile-first responsive**: Uses Tailwind's responsive utilities (`sm:`, `md:`, `lg:`)
 - **Environment variables**: Support for runtime configuration via Docker
-- **Remote deployment**: Supports rsync deployment to remote server (doc0)
 - **Git-based versioning**: Docker images tagged with branch names automatically
-- always check @package.json file first if you can finde an action already setup doing the task
+- When asked to commit something always use the `npm run commit` action from @package.json
+- Always check @package.json file first if you can find an action doing the task (example `npm run commit " your commit message"` )
+- Do not run the `npm run build` and `npm run commit` actions automatically. You might ask for permission to do so. The user needs to confirm their intention before proceeding.

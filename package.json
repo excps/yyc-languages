@@ -1,9 +1,10 @@
 {
       "name": "yyclanguages.ca",
-      "version": "0.2.26",
+      "version": "0.3.16",
       "private": true,
       "type": "module",
       "dependencies": {
+            "@formspree/react": "^3.0.0",
             "@radix-ui/react-accordion": "^1.2.3",
             "@radix-ui/react-alert-dialog": "^1.1.6",
             "@radix-ui/react-aspect-ratio": "^1.1.2",
@@ -60,10 +61,14 @@
             "dev": "vite",
             "build": "vite build",
             "preview": "vite preview",
-            "sync": "rsync -avz --delete ./ doc0:/home/andi/docker/yyc-languages/",
-            "commit": "./scripts/version-commit.sh",
             "pull": "./scripts/sync-latest.sh",
+            "commit": "./scripts/version-commit.sh",
             "deploy": "./scripts/remote-deploy.sh",
-            "portainer-update": "./scripts/portainer-update.sh"
+            "portainer-update": "./scripts/portainer-update.sh",
+            "docker:build": "BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo 'unknown') && docker build -t yyc-languages:$BRANCH -t yyc-languages:latest .",
+            "docker:push": "BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo 'unknown') && docker tag yyc-languages:$BRANCH localhost:5001/yyc-languages:$BRANCH && docker push localhost:5001/yyc-languages:$BRANCH && docker tag yyc-languages:latest localhost:5001/yyc-languages:latest && docker push localhost:5001/yyc-languages:latest",
+            "docker:up": "docker compose up -d",
+            "docker:down": "docker compose down",
+            "docker:logs": "docker compose logs -f yycl"
       }
 }

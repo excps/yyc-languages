@@ -47,9 +47,12 @@ const features = [
 
 export function Features() {
   return (
-    <div className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+    <div
+      id="features"
+      className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-gray-50"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-12">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <h2 className="text-4xl text-gray-900 mb-4">
             Why Choose Our German Tutoring?
           </h2>
