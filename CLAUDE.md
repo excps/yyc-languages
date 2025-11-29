@@ -321,3 +321,4 @@ Use `ImageWithFallback` component from `src/components/general/` for external im
 - Always check @package.json file first if you can find an action doing the task (example `npm run commit " your commit message"` )
 - Do not run the `npm run build` and `npm run commit` actions automatically. You might ask for permission to do so. The user needs to confirm their intention before proceeding.
 - When creating a new blog post always put it in first position on the general blog page to keep it in reverse date order.
+- Never automatically commit changes. Only Commit when requested with user confirmation.
