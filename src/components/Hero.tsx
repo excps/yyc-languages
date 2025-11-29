@@ -47,6 +47,7 @@ export function Hero() {
                 size="lg"
                 className="bg-blue-600 hover:bg-blue-700"
                 onClick={scrollToContact}
+                aria-label="Get started with German language tutoring - Navigate to contact form"
               >
                 Let's Get Started
               </Button>
@@ -58,6 +59,7 @@ export function Hero() {
                     .getElementById("courses")
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
+                aria-label="View available German language courses"
               >
                 See Course Options
               </Button>
@@ -67,34 +69,9 @@ export function Hero() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
               <ImageWithFallback
                 src="/images/main-image-m.jpg"
-                alt="German language learning session"
+                alt="One-on-one German language tutoring session with native speaker Andrea in Calgary"
                 className="w-full h-full object-cover"
               />
-            </div>
-            <div className="hidden">
-              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-green-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500">Success Rate</div>
-                    <div className="text-xl text-gray-900">98%</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
