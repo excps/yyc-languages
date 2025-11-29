@@ -50,7 +50,7 @@ function BlogContent() {
   );
 }
 
-export function EssentialTips() {
+export default function EssentialTips() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

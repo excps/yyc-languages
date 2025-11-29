@@ -172,7 +172,7 @@ function renderAnswer(answer: string) {
   });
 }
 
-export function FAQPage() {
+export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 

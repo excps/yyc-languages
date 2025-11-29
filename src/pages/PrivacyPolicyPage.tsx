@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function PrivacyPolicyPage() {
+export default function PrivacyPolicyPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);

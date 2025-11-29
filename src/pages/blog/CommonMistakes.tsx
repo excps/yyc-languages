@@ -48,7 +48,7 @@ function BlogContent() {
   );
 }
 
-export function CommonMistakes() {
+export default function CommonMistakes() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

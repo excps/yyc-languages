@@ -22,7 +22,7 @@ const blogPosts = [
   }
 ];
 
-export function BlogPage() {
+export default function BlogPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

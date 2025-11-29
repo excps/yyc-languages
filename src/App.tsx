@@ -32,20 +32,46 @@ export default function App() {
       <BrowserRouter>
         <div className="min-h-screen">
           <Navigation />
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/meet-andrea" element={<MeetAndreaPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/common-mistakes-german-learners" element={<CommonMistakes />} />
-              <Route path="/blog/essential-tips-learning-german" element={<EssentialTips />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-              <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/meet-andrea" element={<MeetAndreaPage />} />
+            <Route path="/blog" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <BlogPage />
+              </Suspense>
+            } />
+            <Route path="/blog/common-mistakes-german-learners" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <CommonMistakes />
+              </Suspense>
+            } />
+            <Route path="/blog/essential-tips-learning-german" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <EssentialTips />
+              </Suspense>
+            } />
+            <Route path="/privacy-policy" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <PrivacyPolicyPage />
+              </Suspense>
+            } />
+            <Route path="/terms-of-service" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <TermsOfServicePage />
+              </Suspense>
+            } />
+            <Route path="/faq" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <FAQPage />
+              </Suspense>
+            } />
+            <Route path="*" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <NotFoundPage />
+              </Suspense>
+            } />
+          </Routes>
           <Footer />
         </div>
       </BrowserRouter>

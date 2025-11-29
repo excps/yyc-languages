@@ -1,13 +1,11 @@
-import { useEffect, Suspense, lazy } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "../components/Hero";
 import { Features } from "../components/Features";
-
-// Lazy load components that are below the fold
-const Courses = lazy(() => import("../components/Courses"));
-const Testimonials = lazy(() => import("../components/Testimonials"));
-const Pricing = lazy(() => import("../components/Pricing"));
-const Contact = lazy(() => import("../components/Contact"));
+import { Courses } from "../components/Courses";
+import { Testimonials } from "../components/Testimonials";
+import { Pricing } from "../components/Pricing";
+import { Contact } from "../components/Contact";
 
 export function HomePage() {
   const location = useLocation();
@@ -31,12 +29,10 @@ export function HomePage() {
     <div>
       <Hero />
       <Features />
-      <Suspense fallback={<div className="h-32 flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
-        <Courses />
-        <Testimonials />
-        <Pricing />
-        <Contact />
-      </Suspense>
+      <Courses />
+      <Testimonials />
+      <Pricing />
+      <Contact />
     </div>
   );
 }
