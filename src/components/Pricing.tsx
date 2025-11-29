@@ -60,69 +60,74 @@ const plans = [
 
 export function Pricing() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-16">
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <h2 className="text-4xl text-gray-900 mb-4">
-          Flexible Options for Every Learner
-        </h2>
-        <p className="text-xl text-gray-600">
-          Choose the option that works best for you. Quality tutoring tailored
-          to your goals and schedule.
-        </p>
-      </div>
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {plans.map((plan, index) => (
-          <Card
-            key={index}
-            className={`p-8 relative flex flex-col h-full ${plan.color} border-2 ${
-              plan.popular ? "shadow-xl scale-105" : ""
-            }`}
-          >
-            {plan.popular && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <span className="px-4 py-1 bg-blue-600 text-white rounded-full text-sm">
-                  Most Popular
-                </span>
-              </div>
-            )}
-            <div className="flex-grow">
-              <div className="text-center mb-6">
-                <h3 className={`text-2xl font-bold ${plan.titleColor} mb-2`}>
-                  {plan.name}
-                </h3>
-                <div className="mb-2">
-                  <span className="text-2xl text-gray-900">{plan.price}</span>
-                  <span className="text-gray-600 ml-2">{plan.period}</span>
-                </div>
-                <p className="text-gray-600">{plan.description}</p>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <Button
-              className="w-full bg-blue-600 hover:bg-blue-700"
-              onClick={() => {
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
+    <div
+      id="features"
+      className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-gray-50"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-12">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-4xl text-gray-900 mb-4">
+            Flexible Options for Every Learner
+          </h2>
+          <p className="text-xl text-gray-600">
+            Choose the option that works best for you. Quality tutoring tailored
+            to your goals and schedule.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {plans.map((plan, index) => (
+            <Card
+              key={index}
+              className={`p-8 relative flex flex-col h-full ${plan.color} border-2 ${
+                plan.popular ? "shadow-xl scale-105" : ""
+              }`}
             >
-              {plan.cta}
-            </Button>
-          </Card>
-        ))}
-      </div>
-      <div className="mt-12 text-center text-gray-600">
-        <p>
-          All plans include a satisfaction guarantee. Not happy? Get a full
-          refund within 7 days.
-        </p>
+              {plan.popular && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <span className="px-4 py-1 bg-blue-600 text-white rounded-full text-sm">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+              <div className="flex-grow">
+                <div className="text-center mb-6">
+                  <h3 className={`text-2xl font-bold ${plan.titleColor} mb-2`}>
+                    {plan.name}
+                  </h3>
+                  <div className="mb-2">
+                    <span className="text-2xl text-gray-900">{plan.price}</span>
+                    <span className="text-gray-600 ml-2">{plan.period}</span>
+                  </div>
+                  <p className="text-gray-600">{plan.description}</p>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <Button
+                className="w-full bg-blue-600 hover:bg-blue-700"
+                onClick={() => {
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                {plan.cta}
+              </Button>
+            </Card>
+          ))}
+        </div>
+        <div className="mt-12 text-center text-gray-600">
+          <p>
+            All plans include a satisfaction guarantee. Not happy? Get a full
+            refund within 7 days.
+          </p>
+        </div>
       </div>
     </div>
   );

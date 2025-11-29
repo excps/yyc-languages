@@ -10,21 +10,21 @@ export function Navigation() {
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    element?.scrollIntoView({ behavior: "smooth" });
     setIsMenuOpen(false);
   };
 
   const handleHomeClick = (e: React.MouseEvent) => {
-    if (location.pathname === '/') {
+    if (location.pathname === "/") {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   return (
     <nav className="sticky top-0 bg-background shadow-sm z-50 border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-8">
           <div className="flex items-center gap-2">
             <Link
               to="/"
@@ -34,7 +34,7 @@ export function Navigation() {
               YYC-Languages
             </Link>
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <Link
@@ -49,16 +49,22 @@ export function Navigation() {
             >
               Meet Andrea
             </Link>
-            {location.pathname === '/' ? (
+            {location.pathname === "/" ? (
               <>
                 <button
-                  onClick={() => scrollToSection('courses')}
+                  onClick={() => scrollToSection("courses")}
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Courses
                 </button>
                 <button
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => scrollToSection("testimonials")}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Testimonials
+                </button>
+                <button
+                  onClick={() => scrollToSection("contact")}
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Contact
@@ -73,6 +79,12 @@ export function Navigation() {
                   Courses
                 </Link>
                 <Link
+                  to="/#testimonials"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Testimonials
+                </Link>
+                <Link
                   to="/#contact"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
@@ -81,11 +93,11 @@ export function Navigation() {
               </>
             )}
             <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="hidden text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? (
+              {theme === "dark" ? (
                 <Sun className="w-5 h-5" />
               ) : (
                 <Moon className="w-5 h-5" />
@@ -98,7 +110,11 @@ export function Navigation() {
             className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -119,16 +135,22 @@ export function Navigation() {
             >
               Meet Andrea
             </Link>
-            {location.pathname === '/' ? (
+            {location.pathname === "/" ? (
               <>
                 <button
-                  onClick={() => scrollToSection('courses')}
+                  onClick={() => scrollToSection("courses")}
                   className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
                 >
                   Courses
                 </button>
                 <button
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => scrollToSection("testimonials")}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Testimonials
+                </button>
+                <button
+                  onClick={() => scrollToSection("contact")}
                   className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
                 >
                   Contact
@@ -144,6 +166,13 @@ export function Navigation() {
                   Courses
                 </Link>
                 <Link
+                  to="/#testimonials"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
+                >
+                  Testimonials
+                </Link>
+                <Link
                   to="/#contact"
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded"
@@ -154,17 +183,17 @@ export function Navigation() {
             )}
             <button
               onClick={() => {
-                setTheme(theme === 'dark' ? 'light' : 'dark');
+                setTheme(theme === "dark" ? "light" : "dark");
                 setIsMenuOpen(false);
               }}
               className="hidden w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent rounded flex items-center gap-2"
             >
-              {theme === 'dark' ? (
+              {theme === "dark" ? (
                 <Sun className="w-5 h-5" />
               ) : (
                 <Moon className="w-5 h-5" />
               )}
-              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
             </button>
           </div>
         )}
