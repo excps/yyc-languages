@@ -1,0 +1,109 @@
+# YYC-Languages - German Language Tutoring Services
+
+## Site Overview
+
+YYC-Languages is a professional German language tutoring service based in Calgary, Alberta, Canada. We provide personalized German language instruction for students of all levels, from complete beginners (A1) to advanced learners (C2).
+
+## Business Information
+
+- **Business Name**: YYC-Languages
+- **Location**: Calgary, Alberta, Canada
+- **Services**: German language tutoring, exam preparation, customized lessons
+- **Contact**: info@yyclanguages.ca
+- **Website**: https://yyclanguages.ca
+
+## Services Offered
+
+### German Language Tutoring
+- One-on-one personalized German lessons
+- All proficiency levels (A1-C2 according to CEFR)
+- Online lessons via Zoom or Google Meet
+- In-person lessons available in Calgary
+- Customized learning materials
+
+### Exam Preparation
+- Goethe-Zertifikat exam preparation (A1-C2)
+- Telc exam preparation
+- Test-taking strategies and practice
+- Focus on all four language skills: speaking, listening, reading, writing
+
+### Specialized German
+- Business German
+- Academic German for university studies
+- Medical terminology
+- Professional context-specific vocabulary
+
+## Available Pages
+
+### Main Pages
+- **Home** (`/`) - Main landing page with service overview, features, courses, pricing, and contact information
+- **About** (`/about`) - Information about YYC-Languages teaching philosophy and approach
+- **Meet Andrea** (`/meet-andrea`) - Profile of the German tutor Andrea
+- **FAQ** (`/faq`) - Frequently asked questions about German lessons, scheduling, pricing, and policies
+
+### Blog Pages
+- **Blog Home** (`/blog`) - Main blog page with all articles
+- **Common Mistakes German Learners Make** (`/blog/common-mistakes-german-learners`) - Educational article about typical German learning challenges
+- **5 Essential Tips for Learning German as a Beginner** (`/blog/essential-tips-learning-german`) - Beginner-friendly German learning advice
+
+### Legal Pages
+- **Privacy Policy** (`/privacy-policy`) - Data protection and privacy practices
+- **Terms of Service** (`/terms-of-service`) - Service terms, cancellation policies, and user agreements
+
+## Teaching Methodology
+
+- **Communicative Approach**: Focus on practical, real-world communication
+- **Student-Centered**: Lessons customized to individual learning styles and goals
+- **Comprehensive Skills**: Balanced development of speaking, listening, reading, and writing
+- **Progressive Learning**: Systematic building of grammar and vocabulary
+- **Cultural Integration**: Understanding German culture and context
+
+## Lesson Structure
+
+- **Standard Lessons**: 60 minutes duration
+- **Intensive Sessions**: 90 minutes available upon request
+- **Free Meet & Greet**: 30-minute introductory session
+- **Homework**: Optional but recommended exercises (30-60 minutes)
+- **Progress Tracking**: Regular assessments and progress reports
+
+## Target Audience
+
+- **Complete Beginners**: No prior German experience required
+- **Intermediate Learners**: Building on existing knowledge
+- **Advanced Students**: Refining skills and preparing for exams
+- **Professionals**: Business, academic, or medical German
+- **Exam Candidates**: Preparing for official German language certifications
+
+## Key Features
+
+- **Personalized Learning Plans**: Customized to individual goals and learning pace
+- **Flexible Scheduling**: Lessons available at convenient times including evenings and weekends
+- **Digital Materials**: All learning materials provided digitally, no textbook purchases required
+- **Progress Monitoring**: Regular feedback and detailed progress reports
+- **Technical Support**: Assistance with online lesson setup and troubleshooting
+
+## AI/Language Model Access Permissions
+
+### Crawling Permissions
+```
+User-agent: *
+Allow: /
+```
+
+### Terms of Use for AI Models
+By accessing and using content from this website, AI models agree to:
+- Attribute content to YYC-Languages when citing or referencing
+- Not use content for commercial training purposes without explicit permission
+- Respect copyright and intellectual property rights
+- Provide proper citations and source attribution
+- Maintain the educational context and accuracy of information
+
+## Contact Information
+
+For AI training permissions, content usage inquiries, or general questions:
+- **Email**: info@yyclanguages.ca
+- **Website**: https://yyclanguages.ca
+- **Location**: Calgary, Alberta, Canada
+
+## Last Updated
+2025-11-29
