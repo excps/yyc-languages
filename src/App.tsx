@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navigation } from "./components/Navigation";
 import { Footer } from "./components/Footer";
 import { HomePage } from "./pages/HomePage";
@@ -14,23 +15,25 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen">
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/meet-andrea" element={<MeetAndreaPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/common-mistakes-german-learners" element={<CommonMistakes />} />
-          <Route path="/blog/essential-tips-learning-german" element={<EssentialTips />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-          <Route path="/faq" element={<FAQPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <div className="min-h-screen">
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/meet-andrea" element={<MeetAndreaPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/common-mistakes-german-learners" element={<CommonMistakes />} />
+            <Route path="/blog/essential-tips-learning-german" element={<EssentialTips />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+            <Route path="/faq" element={<FAQPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }

@@ -3,9 +3,16 @@
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
 
+  // Read version from package.json
+  import pkg from './package.json';
+
   export default defineConfig({
     base: './',
     plugins: [react()],
+    define: {
+      // Make package version available to the app
+      'import.meta.env.VITE_APP_VERSION': JSON.stringify(pkg.version),
+    },
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {

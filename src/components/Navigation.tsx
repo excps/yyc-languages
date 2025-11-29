@@ -121,6 +121,9 @@ export function Navigation() {
           <button
             className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMenuOpen ? (
               <X className="w-6 h-6" />
@@ -132,7 +135,7 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 space-y-4">
+          <div id="mobile-menu" className="md:hidden py-4 space-y-4">
             <Link
               to="/about"
               onClick={() => setIsMenuOpen(false)}
